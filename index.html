@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mustafa Bozkaya — AI/ML Project Portfolio</title>
+    <meta name="description" content="AI, Machine Learning, Data Science, and Data Engineering project portfolio by Mustafa Bozkaya" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>" />
+    <style>
+        /* ─── Reset & Base ─── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-hover: #273548;
+            --border: #334155;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --accent2: #a78bfa;
+            --green: #34d399;
+            --radius: 12px;
+            --shadow: 0 4px 24px rgba(0,0,0,.4);
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ─── Header ─── */
+        header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 3rem 1.5rem 2rem;
+            text-align: center;
+        }
+        header h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -.02em; }
+        header h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        header p { color: var(--text-muted); max-width: 600px; margin: .75rem auto 0; font-size: 1.05rem; }
+        header .links { margin-top: 1.25rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        header .links a {
+            color: var(--accent); text-decoration: none; font-size: .9rem; font-weight: 600;
+            padding: .4rem 1rem; border: 1px solid var(--accent); border-radius: 999px;
+            transition: .2s;
+        }
+        header .links a:hover { background: var(--accent); color: #0f172a; }
+
+        /* ─── Stats Bar ─── */
+        .stats {
+            display: flex; gap: 2rem; justify-content: center; padding: 1.5rem 1rem;
+            background: var(--surface); border-bottom: 1px solid var(--border); flex-wrap: wrap;
+        }
+        .stats .stat { text-align: center; }
+        .stats .stat .num { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+        .stats .stat .label { font-size: .8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; }
+
+        /* ─── Filters ─── */
+        .filters {
+            display: flex; gap: .5rem; justify-content: center; padding: 1.5rem 1rem;
+            flex-wrap: wrap; position: sticky; top: 0; background: var(--surface);
+            border-bottom: 1px solid var(--border); z-index: 10;
+        }
+        .filters button {
+            background: transparent; color: var(--text-muted); border: 1px solid var(--border);
+            padding: .4rem 1rem; border-radius: 999px; cursor: pointer; font-size: .85rem;
+            transition: .2s; font-weight: 500;
+        }
+        .filters button:hover { border-color: var(--accent); color: var(--text); }
+        .filters button.active { background: var(--accent); color: #0f172a; border-color: var(--accent); font-weight: 700; }
+
+        /* ─── Project Grid ─── */
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.25rem; padding: 1.5rem; max-width: 1280px; margin: 0 auto;
+        }
+        .card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 1.5rem; transition: .25s; display: flex; flex-direction: column;
+            box-shadow: var(--shadow); cursor: pointer; position: relative; overflow: hidden;
+        }
+        .card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2)); opacity: 0;
+            transition: .25s;
+        }
+        .card:hover { transform: translateY(-4px); border-color: var(--accent); }
+        .card:hover::before { opacity: 1; }
+        .card .tag {
+            display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .05em; padding: .2rem .6rem; border-radius: 4px; margin-bottom: .75rem;
+            width: fit-content;
+        }
+        .card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: .5rem; line-height: 1.3; }
+        .card p { color: var(--text-muted); font-size: .9rem; line-height: 1.5; flex: 1; }
+        .card .tech {
+            display: flex; gap: .4rem; flex-wrap: wrap; margin-top: 1rem; padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        .card .tech span {
+            background: var(--bg); color: var(--text-muted); font-size: .75rem; padding: .15rem .6rem;
+            border-radius: 4px; font-weight: 500;
+        }
+        .card .footer-link {
+            margin-top: .75rem; display: flex; align-items: center; gap: .4rem;
+            color: var(--accent); text-decoration: none; font-size: .85rem; font-weight: 600;
+        }
+        .card .footer-link:hover { text-decoration: underline; }
+
+        /* ─── Tag Colors ─── */
+        .tag-ml { background: #3b82f680; color: #93c5fd; }
+        .tag-ds { background: #10b98180; color: #6ee7b7; }
+        .tag-ai { background: #8b5cf680; color: #c4b5fd; }
+        .tag-web { background: #f59e0b80; color: #fcd34d; }
+        .tag-de { background: #06b6d480; color: #67e8f9; }
+        .tag-cv { background: #ef444480; color: #fca5a5; }
+        .tag-da { background: #ec489980; color: #f9a8d4; }
+        .tag-auto { background: #14b8a680; color: #5eead4; }
+
+        /* ─── Modal ─── */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 100; justify-content: center; align-items: center; padding: 1rem; }
+        .modal-overlay.open { display: flex; }
+        .modal {
+            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+            max-width: 700px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,.6); position: relative;
+        }
+        .modal .close {
+            position: absolute; top: 1rem; right: 1rem; background: none; border: none;
+            color: var(--text-muted); font-size: 1.5rem; cursor: pointer; padding: .25rem;
+            line-height: 1;
+        }
+        .modal .close:hover { color: var(--text); }
+        .modal h2 { font-size: 1.5rem; margin-bottom: .5rem; }
+        .modal .badge { margin-bottom: 1rem; }
+        .modal p { color: var(--text-muted); margin-bottom: 1rem; }
+        .modal pre {
+            background: var(--bg); padding: 1rem; border-radius: 8px; overflow-x: auto;
+            font-size: .85rem; margin: 1rem 0; border: 1px solid var(--border);
+        }
+        .modal a.button {
+            display: inline-block; background: var(--accent); color: #0f172a; font-weight: 700;
+            padding: .6rem 1.5rem; border-radius: 8px; text-decoration: none; margin-top: .5rem;
+        }
+
+        /* ─── Footer ─── */
+        footer {
+            text-align: center; padding: 2rem 1rem; color: var(--text-muted); font-size: .85rem;
+            border-top: 1px solid var(--border); margin-top: 2rem;
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 640px) {
+            header h1 { font-size: 1.6rem; }
+            .grid { grid-template-columns: 1fr; padding: 1rem; }
+            .stats { gap: 1rem; }
+            .filters { gap: .35rem; }
+            .filters button { font-size: .8rem; padding: .3rem .7rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══ Header ═══ -->
+<header>
+    <h1>🧠 <span>AI/ML Project Portfolio</span></h1>
+    <p>Mustafa Bozkaya — AI Platform Engineer, Data Scientist, and Full-Stack Python Developer</p>
+    <div class="links">
+        <a href="https://github.com/mustafabozkaya">GitHub</a>
+        <a href="https://www.linkedin.com/in/mustafa-bozkaya">LinkedIn</a>
+        <a href="https://mustafabozkaya.github.io">Main Site</a>
+        <a href="https://github.com/mustafabozkaya/AI-ML-DL-DS_Projects_Portfolio">Repo</a>
+    </div>
+</header>
+
+<!-- ═══ Stats ═══ -->
+<div class="stats" id="stats-bar">
+    <div class="stat"><div class="num" id="project-count">0</div><div class="label">Projects</div></div>
+    <div class="stat"><div class="num" id="category-count">0</div><div class="label">Categories</div></div>
+    <div class="stat"><div class="num" id="tech-count">0</div><div class="label">Technologies</div></div>
+</div>
+
+<!-- ═══ Filters ═══ -->
+<div class="filters" id="filters">
+    <button class="active" data-filter="all">All</button>
+</div>
+
+<!-- ═══ Grid ═══ -->
+<div class="grid" id="grid"></div>
+
+<!-- ═══ Modal ═══ -->
+<div class="modal-overlay" id="modal">
+    <div class="modal">
+        <button class="close" onclick="closeModal()">&times;</button>
+        <div id="modal-content"></div>
+    </div>
+</div>
+
+<!-- ═══ Footer ═══ -->
+<footer>
+    <p>Built with ❤️ by <a href="https://github.com/mustafabozkaya">Mustafa Bozkaya</a> &middot; Projects hosted on <a href="https://github.com/mustafabozkaya/AI-ML-DL-DS_Projects_Portfolio">GitHub</a></p>
+</footer>
+
+<script>
+// ─── Project Data ───
+const projects = [
+    // NEW UPWORK-FOCUSED PROJECTS
+    {
+        title: "Web Scraper Demo 🌐",
+        tag: "Data Extraction",
+        tagClass: "tag-de",
+        category: "data",
+        description: "Production-grade web scraping toolkit with BeautifulSoup and Requests. Stealth mode with rotating user agents, exponential backoff retry, and multi-format export (CSV/JSON/Excel). CLI interface and Python API for data extraction, price monitoring, and lead generation.",
+        tech: ["Python", "BeautifulSoup", "Requests", "Pandas", "Selenium"],
+        details: "A modular web scraper with retry logic, stealth mode (fake user agents), and export to CSV, JSON, Excel, and Parquet. Includes a CLI interface with argparse and a chainable Python API. Perfect for Upwork data collection, scraping, and ETL tasks.",
+        link: "web-scraper-demo/"
+    },
+    {
+        title: "Data Cleaning Pipeline 🧹",
+        tag: "Data Processing",
+        tagClass: "tag-da",
+        category: "data",
+        description: "Automated data quality toolkit using Pandas. Detects and fixes missing values, duplicates, outliers, type mismatches, date formatting issues, and whitespace. Generates detailed cleaning reports. Chainable pipeline API with YAML configuration support.",
+        tech: ["Python", "Pandas", "NumPy", "YAML", "OpenPyXL"],
+        details: "A complete data cleaning solution with automatic profiling, intelligent missing value filling (auto/mean/median/mode), outlier detection (IQR/Z-score), dtype fixing, date standardization, and detailed cleaning reports. Supports CSV, Excel, JSON, and Parquet.",
+        link: "data-cleaning-pipeline/"
+    },
+    {
+        title: "Data Annotation Helper 🏷️",
+        tag: "ML Dataset Tools",
+        tagClass: "tag-ml",
+        category: "ml",
+        description: "Comprehensive ML dataset management toolkit. Convert between COCO JSON, YOLO TXT, CSV, and Pascal VOC XML formats. Validate annotations (bounds checking, missing files, format errors). Split datasets into train/val/test with statistics and visualization.",
+        tech: ["Python", "NumPy", "OpenCV", "Pillow", "TQDM"],
+        details: "Supports bidirectional conversion between all major annotation formats. Validates bounding boxes for out-of-bounds, negative dimensions, and missing image files. Generates dataset statistics and visualizes annotations. Ideal for YOLOv8 training prep.",
+        link: "data-annotation-helper/"
+    },
+    // EXISTING PROJECTS
+    {
+        title: "Medical Fundus RAG 🏥",
+        tag: "Agentic AI",
+        tagClass: "tag-ai",
+        category: "ai",
+        description: "Explainable AI for eye disease diagnosis using RAG with BiomedCLIP, Qdrant, and Gemini Pro.",
+        tech: ["RAG", "BiomedCLIP", "Qdrant", "Gemini", "FastAPI"],
+        details: "Multi-modal RAG pipeline for medical image diagnosis with explainability features.",
+        link: "https://github.com/mustafabozkaya/medical-fundus-rag"
+    },
+    {
+        title: "Ollama Streamlit Chat 💬",
+        tag: "Agentic AI",
+        tagClass: "tag-ai",
+        category: "ai",
+        description: "Local LLM chat interface with Ollama backend and Streamlit frontend.",
+        tech: ["Ollama", "Streamlit", "Python", "LangChain"],
+        details: "Privacy-first chat interface running local LLMs through Ollama with streaming responses.",
+        link: "https://github.com/mustafabozkaya/ollama-chat-app"
+    },
+    {
+        title: "AI System Architect Agent 🏗️",
+        tag: "Agentic AI",
+        tagClass: "tag-ai",
+        category: "ai",
+        description: "Autonomous agent that designs and generates system architectures from natural language requirements.",
+        tech: ["Python", "LangChain", "LLM", "Graphviz"],
+        details: "An AI agent that can take natural language requirements and produce complete system architecture diagrams and documentation.",
+        link: "https://github.com/mustafabozkaya/Awesome_Agent_Rag_LMMs_apps"
+    },
+    {
+        title: "ROS2 Autonomous Navigator 🤖",
+        tag: "Robotics",
+        tagClass: "tag-auto",
+        category: "cv",
+        description: "Autonomous navigation system for ROS2-based robots with SLAM and path planning.",
+        tech: ["ROS2", "SLAM", "Nav2", "Python", "C++"],
+        details: "Full-stack autonomous navigation using ROS2 Humble with real-time obstacle avoidance and mapping.",
+        link: "https://github.com/mustafabozkaya/Awesome_Agent_Rag_LMMs_apps"
+    },
+    {
+        title: "Enterprise Vision AI 👁️",
+        tag: "Computer Vision",
+        tagClass: "tag-cv",
+        category: "cv",
+        description: "Open-source computer vision platform for industrial quality control and inspection.",
+        tech: ["PyTorch", "OpenCV", "ONNX", "FastAPI", "React"],
+        details: "End-to-end CV platform for defect detection, classification, and real-time monitoring in manufacturing.",
+        link: "https://github.com/mustafabozkaya/enterprise-vision-ai"
+    },
+    {
+        title: "Car Price Prediction 🚗",
+        tag: "Machine Learning",
+        tagClass: "tag-ml",
+        category: "ml",
+        description: "Predict used car prices using regression models with feature engineering.",
+        tech: ["Python", "Scikit-learn", "Pandas", "Matplotlib"],
+        details: "Comparative analysis of Linear Regression, Random Forest, and XGBoost for car price prediction.",
+        link: "Car-price-prediction-project/"
+    },
+    {
+        title: "House Price Prediction 🏠",
+        tag: "Machine Learning",
+        tagClass: "tag-ml",
+        category: "ml",
+        description: "Housing price prediction with advanced regression techniques.",
+        tech: ["Python", "Scikit-learn", "Pandas", "Seaborn"],
+        details: "End-to-end ML pipeline for predicting house prices using California housing data.",
+        link: "House_price_prediction/"
+    },
+    {
+        title: "Predictive Maintenance 🔧",
+        tag: "Data Science",
+        tagClass: "tag-ds",
+        category: "data",
+        description: "Predict equipment failure in manufacturing using sensor data analysis.",
+        tech: ["Python", "Scikit-learn", "Time Series", "Pandas"],
+        details: "Classification models to predict machine failure before it happens, reducing downtime.",
+        link: "Predictive_Maintance_Analysis/"
+    },
+    {
+        title: "Lung Cancer Detection 🫁",
+        tag: "Deep Learning",
+        tagClass: "tag-ml",
+        category: "ml",
+        description: "Multi-model lung cancer prediction using medical imaging and ensemble methods.",
+        tech: ["TensorFlow", "Keras", "CNN", "Python"],
+        details: "Comparative study of multiple deep learning architectures for lung cancer classification.",
+        link: "Lung cancer prediction multi models/"
+    },
+    {
+        title: "Conformal Prediction 📊",
+        tag: "Data Science",
+        tagClass: "tag-ds",
+        category: "data",
+        description: "Uncertainty quantification in ML predictions using conformal prediction.",
+        tech: ["Python", "Conformal", "Scikit-learn", "NumPy"],
+        details: "Implementation of conformal prediction methods for reliable ML uncertainty estimation.",
+        link: "Conformal/"
+    }
+];
+
+// ─── Build UI ───
+const categories = [...new Set(projects.map(p => p.category))];
+const tags = [...new Set(projects.map(p => p.tag))];
+const allTech = [...new Set(projects.flatMap(p => p.tech))];
+
+document.getElementById('project-count').textContent = projects.length;
+document.getElementById('category-count').textContent = categories.length;
+document.getElementById('tech-count').textContent = allTech.length;
+
+// Add filter buttons from tags
+const filterContainer = document.getElementById('filters');
+tags.forEach(tag => {
+    const btn = document.createElement('button');
+    btn.textContent = tag;
+    btn.dataset.filter = tag;
+    btn.onclick = () => filterProjects(tag);
+    filterContainer.appendChild(btn);
+});
+
+// Also add category-based buttons
+categories.forEach(cat => {
+    const btn = document.createElement('button');
+    const label = { ai: 'Agentic AI', ml: 'ML/DL', data: 'Data Engineering', cv: 'CV/Robotics' }[cat] || cat;
+    btn.textContent = label;
+    btn.dataset.filter = cat;
+    btn.onclick = () => filterProjects(cat);
+    filterContainer.appendChild(btn);
+});
+
+function filterProjects(filter) {
+    document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.filters button[data-filter="${filter}"]`)?.classList.add('active');
+    document.querySelector('.filters button[data-filter="all"]')?.classList.add('active');
+    // Redundant with above — keep all for "all" filter
+    document.querySelectorAll('.filters button').forEach(b => {
+        if (b.dataset.filter === filter) b.classList.add('active');
+    });
+    if (filter === 'all') {
+        document.querySelector('.filters button[data-filter="all"]').classList.add('active');
+    }
+
+    const filtered = filter === 'all'
+        ? projects
+        : projects.filter(p => p.category === filter || p.tag === filter);
+
+    renderGrid(filtered);
+}
+
+function renderGrid(items) {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = items.map(p => `
+        <div class="card" onclick="openModal(${projects.indexOf(p)})">
+            <span class="tag ${p.tagClass}">${p.tag}</span>
+            <h3>${p.title}</h3>
+            <p>${p.description}</p>
+            <div class="tech">${p.tech.map(t => `<span>${t}</span>`).join('')}</div>
+            <a href="${p.link}" class="footer-link" onclick="event.stopPropagation()">View Project →</a>
+        </div>
+    `).join('');
+}
+
+function openModal(index) {
+    const p = projects[index];
+    document.getElementById('modal-content').innerHTML = `
+        <span class="tag ${p.tagClass} badge">${p.tag}</span>
+        <h2>${p.title}</h2>
+        <p>${p.details}</p>
+        <div class="tech" style="margin-bottom:1rem">${p.tech.map(t => `<span>${t}</span>`).join('')}</div>
+        <a href="${p.link}" class="button">🔗 View Project →</a>
+    `;
+    document.getElementById('modal').classList.add('open');
+}
+
+function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+}
+
+document.getElementById('modal').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closeModal();
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+// Initial render
+renderGrid(projects);
+</script>
+</body>
+</html>
