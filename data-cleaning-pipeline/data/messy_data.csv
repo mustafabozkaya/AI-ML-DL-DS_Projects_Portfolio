@@ -1,0 +1,41 @@
+name,age,email,salary,join_date,department,city
+"John Smith",32,john.smith@email.com,75000,"2023-01-15",Engineering,New York
+"Jane Doe",28,jane.doe@email.com,82000,"2022-06-20",Engineering,San Francisco
+"Bob Wilson",45,bob.w@email.com,,"2021-03-10",Marketing,Chicago
+"Alice Brown",,brown@email.com,65000,"2023-09-05",Engineering,New York
+"Charlie Davis",38,charlie.davis@email.com,72000,"2023-02-28",Sales,New York
+"Eve Martin",29,eve.martin@email.com,68000,"2022-11-15",Marketing,Chicago
+"Frank White",52,frank.white@email.com,95000,"2020-05-22",Engineering,San Francisco
+"Grace Lee",31,grace.lee@email.com,71000,"2023-07-12",Engineering,Boston
+"Henry Brown",43,henry.brown@email.com,,"2021-09-30",Sales,Chicago
+"Isabel Taylor",,taylor@email.com,78000,"2022-04-18",Marketing,New York
+"Jack Anderson",37,jack.anderson@email.com,83000,"2022-08-25",Engineering,San Francisco
+"Karen Thomas",26,karen.thomas@email.com,55000,"2024-01-10",Sales,Austin
+"Leo Harris",39,leo.harris@email.com,88000,"2021-11-05",Engineering,Boston
+"Maria Clark",41,maria.clark@email.com,92000,"2020-09-15",Marketing,San Francisco
+"Nathan Lewis",33,nathan.lewis@email.com,76000,"2023-03-20",Engineering,New York
+"Olivia Walker",28,olivia.walker@email.com,64000,"2023-10-01",Sales,Austin
+"Paul Adams",55,paul.adams@email.com,102000,"2019-07-15",Engineering,Chicago
+"Quinn Baker",27,quinn.baker@email.com,58000,"2024-02-10",Sales,New York
+"Rachel Green",35,rachel.green@email.com,79000,"2022-05-28",Marketing,Boston
+"Sam Carter",,,92000,"2021-12-01",Engineering,San Francisco
+"Tom Mitchell",44,tom.mitchell@email.com,86000,"2021-04-20",Sales,New York
+"Uma Patel",31,uma.patel@email.com,73000,"2023-06-15",Engineering,Chicago
+"John Smith",32,john.smith@email.com,75000,"2023-01-15",Engineering,New York
+"Victor Young",38,victor.young@email.com,,,"2022-10-10",Engineering,Austin
+"Wendy Kim",27,wendy.kim@email.com,61000,"2023-11-20",Marketing,Boston
+"Xavier Ortiz",40,xavier.ortiz@email.com,90000,"2021-08-12",Sales,San Francisco
+"Yara Singh",29,yara.singh@email.com,67000,"2023-04-25",Engineering,New York
+"Zack Moore",36,zack.moore@email.com,84000,"2022-02-18",Marketing,Chicago
+"Amy Turner",33,amy.turner@email.com,77000,"2023-08-08",Engineering,Boston
+"Brian Foster",,,58000,,Sales,New York
+"John Smith",32,john.smith@email.com,75000,"2023-01-15",Engineering,New York
+"Catherine Reed",42,catherine.reed@email.com,91000,"2020-12-01",Marketing,San Francisco
+"David Collins",37,david.collins@email.com,79000,"2022-07-22",Engineering,Chicago
+"Emily Brooks",29,emily.brooks@email.com,63000,"2023-12-05",Sales,Boston
+"Frank White",52,frank.white@email.com,95000,"2020-05-22",Engineering,San Francisco
+"George Patterson",46,george.patterson@email.com,99000,"2020-03-15",Engineering,New York
+"Hannah Mitchell",28,hannah.mitchell@email.com,62000,"2024-01-25",Marketing,San Francisco
+"Ivan Cruz",35,ivan.cruz@email.com,81000,"2022-09-10",Sales,Chicago
+"Julia Richardson",44,julia.richardson@email.com,93000,"2021-06-30",Engineering,Boston
+"Samuel Johnson",200,samuel@email.com,250000,"2022-01-15",Engineering,New York

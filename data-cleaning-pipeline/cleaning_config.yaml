@@ -1,0 +1,21 @@
+# Data Cleaning Configuration
+# Customize cleaning behavior for each project
+
+fill_strategy: auto  # auto, mean, median, mode, drop, zero
+outlier_method: iqr  # iqr, zscore
+outlier_threshold: 1.5
+
+# Column-specific overrides
+column_overrides:
+  age:
+    fill_strategy: median
+    outlier_method: iqr
+    outlier_threshold: 3.0
+  salary:
+    fill_strategy: mean
+    outlier_method: zscore
+    outlier_threshold: 3.0
+  email:
+    fill_strategy: mode
+  country:
+    fill_strategy: mode
