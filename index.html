@@ -6,218 +6,723 @@
     <title>Mustafa Bozkaya — AI/ML Project Portfolio</title>
     <meta name="description" content="AI, Machine Learning, Data Science, and Data Engineering project portfolio by Mustafa Bozkaya" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>" />
+
+    <!-- Fonts: Space Grotesk (headings) + Inter (body) + JetBrains Mono (code) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js" defer></script>
+
     <style>
         /* ─── Reset & Base ─── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         :root {
-            --bg: #0f172a;
-            --surface: #1e293b;
-            --surface-hover: #273548;
-            --border: #334155;
+            --bg: #0a0a1a;
+            --bg-alt: #0f0f2a;
+            --surface: rgba(30, 30, 60, 0.6);
+            --surface-hover: rgba(40, 40, 80, 0.8);
+            --border: rgba(100, 100, 180, 0.15);
+            --border-hover: rgba(100, 180, 255, 0.3);
             --text: #f1f5f9;
-            --text-muted: #94a3b8;
+            --text-muted: #8899bb;
             --accent: #38bdf8;
             --accent2: #a78bfa;
+            --accent3: #34d399;
             --green: #34d399;
-            --radius: 12px;
-            --shadow: 0 4px 24px rgba(0,0,0,.4);
+            --radius: 16px;
+            --shadow: 0 8px 32px rgba(0,0,0,.5);
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: var(--font-body);
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* ─── Header ─── */
-        header {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 3rem 1.5rem 2rem;
+        /* ─── Three.js Canvas Background ─── */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* ─── Scanline Overlay ─── */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(255,255,255,0.015) 2px,
+                rgba(255,255,255,0.015) 4px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ─── Gradient Background ─── */
+        .bg-glow {
+            position: fixed;
+            top: -50%;
+            left: -25%;
+            width: 150%;
+            height: 150%;
+            background:
+                radial-gradient(ellipse 600px 400px at 20% 30%, rgba(56, 189, 248, 0.06), transparent),
+                radial-gradient(ellipse 500px 500px at 80% 70%, rgba(167, 139, 250, 0.05), transparent),
+                radial-gradient(ellipse 300px 300px at 50% 50%, rgba(52, 211, 153, 0.03), transparent);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ─── Main Content Wrapper ─── */
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ─── Header / Hero ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            padding: 6rem 1.5rem 4rem;
+            position: relative;
         }
-        header h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -.02em; }
-        header h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        header p { color: var(--text-muted); max-width: 600px; margin: .75rem auto 0; font-size: 1.05rem; }
-        header .links { margin-top: 1.25rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-        header .links a {
-            color: var(--accent); text-decoration: none; font-size: .9rem; font-weight: 600;
-            padding: .4rem 1rem; border: 1px solid var(--accent); border-radius: 999px;
-            transition: .2s;
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            padding: 0.4rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
         }
-        header .links a:hover { background: var(--accent); color: #0f172a; }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent3);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--accent3); }
+            50% { opacity: 0.5; box-shadow: 0 0 12px var(--accent3); }
+        }
+
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--accent), var(--accent2), #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h1 .gradient-text-alt {
+            background: linear-gradient(135deg, var(--accent), var(--accent3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-muted);
+            max-width: 600px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-subtitle .highlight {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .hero-cta a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.6rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-family: var(--font-body);
+        }
+
+        .hero-cta .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #6366f1);
+            color: #0a0a1a;
+            border: none;
+        }
+
+        .hero-cta .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(56, 189, 248, 0.3);
+        }
+
+        .hero-cta .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+        }
+
+        .hero-cta .btn-outline:hover {
+            border-color: var(--accent);
+            background: rgba(56, 189, 248, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0;
+        }
+
+        .scroll-indicator .mouse {
+            width: 24px;
+            height: 38px;
+            border: 2px solid var(--text-muted);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .scroll-indicator .mouse::after {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 2px;
+            animation: scroll-wheel 2s ease-in-out infinite;
+        }
+
+        @keyframes scroll-wheel {
+            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+            50% { transform: translateX(-50%) translateY(8px); opacity: 0.3; }
+        }
 
         /* ─── Stats Bar ─── */
-        .stats {
-            display: flex; gap: 2rem; justify-content: center; padding: 1.5rem 1rem;
-            background: var(--surface); border-bottom: 1px solid var(--border); flex-wrap: wrap;
+        .stats-section {
+            padding: 2rem 1rem;
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            z-index: 2;
         }
-        .stats .stat { text-align: center; }
-        .stats .stat .num { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
-        .stats .stat .label { font-size: .8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; }
+
+        .stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            max-width: 900px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .stats .stat {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .stats .stat .num {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats .stat .label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+        }
 
         /* ─── Filters ─── */
+        .filters-wrap {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            padding: 1rem 1rem;
+            background: rgba(10, 10, 26, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
         .filters {
-            display: flex; gap: .5rem; justify-content: center; padding: 1.5rem 1rem;
-            flex-wrap: wrap; position: sticky; top: 0; background: var(--surface);
-            border-bottom: 1px solid var(--border); z-index: 10;
+            display: flex;
+            gap: 0.4rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
         }
+
         .filters button {
-            background: transparent; color: var(--text-muted); border: 1px solid var(--border);
-            padding: .4rem 1rem; border-radius: 999px; cursor: pointer; font-size: .85rem;
-            transition: .2s; font-weight: 500;
+            font-family: var(--font-body);
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
-        .filters button:hover { border-color: var(--accent); color: var(--text); }
-        .filters button.active { background: var(--accent); color: #0f172a; border-color: var(--accent); font-weight: 700; }
+
+        .filters button:hover {
+            border-color: var(--accent);
+            color: var(--text);
+            background: rgba(56, 189, 248, 0.08);
+        }
+
+        .filters button.active {
+            background: linear-gradient(135deg, var(--accent), #6366f1);
+            color: #0a0a1a;
+            border-color: transparent;
+            font-weight: 600;
+        }
 
         /* ─── Project Grid ─── */
+        .grid-section {
+            padding: 2rem 1.5rem 4rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
         .grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 1.25rem; padding: 1.5rem; max-width: 1280px; margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.25rem;
         }
+
         .card {
-            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-            padding: 1.5rem; transition: .25s; display: flex; flex-direction: column;
-            box-shadow: var(--shadow); cursor: pointer; position: relative; overflow: hidden;
+            background: var(--surface);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
         }
+
         .card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent2)); opacity: 0;
-            transition: .25s;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
-        .card:hover { transform: translateY(-4px); border-color: var(--accent); }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: var(--radius);
+            padding: 1px;
+            background: linear-gradient(135deg, transparent, transparent, transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            opacity: 0;
+        }
+
+        .card:hover {
+            transform: translateY(-6px) scale(1.01);
+            border-color: var(--border-hover);
+            box-shadow: 0 12px 48px rgba(56, 189, 248, 0.08), 0 4px 16px rgba(0,0,0,.4);
+        }
+
         .card:hover::before { opacity: 1; }
+
+        .card:hover::after {
+            opacity: 1;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(167, 139, 250, 0.1), transparent);
+        }
+
         .card .tag {
-            display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase;
-            letter-spacing: .05em; padding: .2rem .6rem; border-radius: 4px; margin-bottom: .75rem;
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 0.25rem 0.7rem;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
             width: fit-content;
         }
-        .card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: .5rem; line-height: 1.3; }
-        .card p { color: var(--text-muted); font-size: .9rem; line-height: 1.5; flex: 1; }
+
+        .card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.6;
+            flex: 1;
+        }
+
         .card .tech {
-            display: flex; gap: .4rem; flex-wrap: wrap; margin-top: 1rem; padding-top: 1rem;
+            display: flex;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            padding-top: 1rem;
             border-top: 1px solid var(--border);
         }
+
         .card .tech span {
-            background: var(--bg); color: var(--text-muted); font-size: .75rem; padding: .15rem .6rem;
-            border-radius: 4px; font-weight: 500;
+            background: rgba(255,255,255,0.04);
+            color: var(--text-muted);
+            font-size: 0.73rem;
+            padding: 0.15rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 500;
+            font-family: var(--font-mono);
         }
+
         .card .footer-link {
-            margin-top: .75rem; display: flex; align-items: center; gap: .4rem;
-            color: var(--accent); text-decoration: none; font-size: .85rem; font-weight: 600;
+            margin-top: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: gap 0.3s ease;
         }
-        .card .footer-link:hover { text-decoration: underline; }
+
+        .card .footer-link:hover { gap: 0.7rem; text-decoration: underline; }
 
         /* ─── Tag Colors ─── */
-        .tag-ml { background: #3b82f680; color: #93c5fd; }
-        .tag-ds { background: #10b98180; color: #6ee7b7; }
-        .tag-ai { background: #8b5cf680; color: #c4b5fd; }
-        .tag-web { background: #f59e0b80; color: #fcd34d; }
-        .tag-de { background: #06b6d480; color: #67e8f9; }
-        .tag-cv { background: #ef444480; color: #fca5a5; }
-        .tag-da { background: #ec489980; color: #f9a8d4; }
-        .tag-auto { background: #14b8a680; color: #5eead4; }
+        .tag-ai { background: rgba(139, 92, 246, 0.25); color: #c4b5fd; }
+        .tag-ml { background: rgba(59, 130, 246, 0.25); color: #93c5fd; }
+        .tag-ds { background: rgba(16, 185, 129, 0.25); color: #6ee7b7; }
+        .tag-web { background: rgba(245, 158, 11, 0.25); color: #fcd34d; }
+        .tag-de { background: rgba(6, 182, 212, 0.25); color: #67e8f9; }
+        .tag-cv { background: rgba(239, 68, 68, 0.25); color: #fca5a5; }
+        .tag-da { background: rgba(236, 72, 153, 0.25); color: #f9a8d4; }
+        .tag-auto { background: rgba(20, 184, 166, 0.25); color: #5eead4; }
 
         /* ─── Modal ─── */
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 100; justify-content: center; align-items: center; padding: 1rem; }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.8);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
         .modal-overlay.open { display: flex; }
+
         .modal {
-            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-            max-width: 700px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 2rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,.6); position: relative;
+            background: var(--surface);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            max-width: 700px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,.6);
+            position: relative;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
+
+        .modal-overlay.open .modal {
+            transform: scale(1);
+            opacity: 1;
+        }
+
         .modal .close {
-            position: absolute; top: 1rem; right: 1rem; background: none; border: none;
-            color: var(--text-muted); font-size: 1.5rem; cursor: pointer; padding: .25rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.25rem;
             line-height: 1;
+            transition: color 0.2s;
         }
+
         .modal .close:hover { color: var(--text); }
-        .modal h2 { font-size: 1.5rem; margin-bottom: .5rem; }
-        .modal .badge { margin-bottom: 1rem; }
-        .modal p { color: var(--text-muted); margin-bottom: 1rem; }
-        .modal pre {
-            background: var(--bg); padding: 1rem; border-radius: 8px; overflow-x: auto;
-            font-size: .85rem; margin: 1rem 0; border: 1px solid var(--border);
+
+        .modal h2 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
         }
+
+        .modal .badge { margin-bottom: 1rem; }
+
+        .modal p { color: var(--text-muted); margin-bottom: 1rem; line-height: 1.7; }
+
+        .modal .tech-strip {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .modal .tech-strip span {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
         .modal a.button {
-            display: inline-block; background: var(--accent); color: #0f172a; font-weight: 700;
-            padding: .6rem 1.5rem; border-radius: 8px; text-decoration: none; margin-top: .5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: linear-gradient(135deg, var(--accent), #6366f1);
+            color: #0a0a1a;
+            font-weight: 700;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .modal a.button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(56, 189, 248, 0.3);
         }
 
         /* ─── Footer ─── */
         footer {
-            text-align: center; padding: 2rem 1rem; color: var(--text-muted); font-size: .85rem;
-            border-top: 1px solid var(--border); margin-top: 2rem;
+            text-align: center;
+            padding: 2.5rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            position: relative;
+            z-index: 2;
         }
+
         footer a { color: var(--accent); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
 
         /* ─── Responsive ─── */
-        @media (max-width: 640px) {
-            header h1 { font-size: 1.6rem; }
-            .grid { grid-template-columns: 1fr; padding: 1rem; }
-            .stats { gap: 1rem; }
-            .filters { gap: .35rem; }
-            .filters button { font-size: .8rem; padding: .3rem .7rem; }
+        @media (max-width: 768px) {
+            .hero { min-height: 80vh; padding: 5rem 1.25rem 3rem; }
+            .hero h1 { font-size: clamp(2rem, 8vw, 3rem); }
+            .grid { grid-template-columns: 1fr; }
+            .stats { gap: 1.5rem; }
+            .filters { gap: 0.3rem; }
+            .filters button { font-size: 0.78rem; padding: 0.3rem 0.8rem; }
+            .card { padding: 1.2rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero { min-height: 70vh; padding: 4rem 1rem 2rem; }
+            .hero-cta a { font-size: 0.85rem; padding: 0.6rem 1.2rem; }
+            .grid-section { padding: 1.5rem 1rem 3rem; }
+        }
+
+        /* ─── Reduced Motion ─── */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            #particle-canvas { display: none; }
         }
     </style>
 </head>
 <body>
 
-<!-- ═══ Header ═══ -->
-<header>
-    <h1>🧠 <span>AI/ML Project Portfolio</span></h1>
-    <p>Mustafa Bozkaya — AI Engineer, Data Scientist & Full-Stack Python Developer</p>
-    <div class="links">
-        <a href="https://github.com/mustafabozkaya">GitHub</a>
-        <a href="https://www.linkedin.com/in/mustafa-bozkaya">LinkedIn</a>
-        <a href="https://mustafabozkaya.github.io">Main Site</a>
-        <a href="https://github.com/mustafabozkaya/AI-ML-DL-DS_Projects_Portfolio">Portfolio Repo</a>
-        <a href="https://github.com/mustafabozkaya/Awesome_Agent_Rag_LMMs_apps">Awesome AI Repo</a>
-        <a href="https://agentzero-pi.vercel.app">AgentZero</a>
-        <a href="https://apexcampus.vercel.app">ApexCampus</a>
-        <a href="https://trendpulse-green.vercel.app">TrendPulse</a>
+<!-- ═══ Three.js Canvas ═══ -->
+<canvas id="particle-canvas"></canvas>
+<div class="bg-glow"></div>
+
+<!-- ═══ Content ═══ -->
+<div class="content">
+
+<!-- ═══ Hero ═══ -->
+<section class="hero">
+    <div class="hero-badge" id="hero-badge">
+        <span class="dot"></span>
+        AI Platform Engineer
     </div>
-</header>
+    <h1 id="hero-title">
+        <span class="gradient-text">Mustafa Bozkaya</span>
+    </h1>
+    <p class="hero-subtitle" id="hero-subtitle">
+        Engineering AI systems — from <span class="highlight">data pipelines</span>
+        to <span class="highlight">autonomous agents</span>.<br />
+        Python · ML · Cloud · Generative AI
+    </p>
+    <div class="hero-cta" id="hero-cta">
+        <a href="https://github.com/mustafabozkaya" class="btn-primary" target="_blank">🐙 GitHub</a>
+        <a href="https://www.linkedin.com/in/mustafa-bozkaya" class="btn-outline" target="_blank">💼 LinkedIn</a>
+        <a href="https://mustafabozkaya.github.io" class="btn-outline" target="_blank">🌐 Main Site</a>
+        <a href="https://github.com/mustafabozkaya/AI-ML-DL-DS_Projects_Portfolio" class="btn-outline" target="_blank">📂 Repo</a>
+    </div>
+    <div class="scroll-indicator" id="scroll-indicator">
+        <div class="mouse"></div>
+        <span>Scroll</span>
+    </div>
+</section>
 
 <!-- ═══ Stats ═══ -->
-<div class="stats" id="stats-bar">
-    <div class="stat"><div class="num" id="project-count">0</div><div class="label">Projects</div></div>
-    <div class="stat"><div class="num" id="category-count">0</div><div class="label">Categories</div></div>
-    <div class="stat"><div class="num" id="tech-count">0</div><div class="label">Technologies</div></div>
-</div>
+<section class="stats-section" id="stats-section">
+    <div class="stats">
+        <div class="stat"><div class="num" id="project-count">0</div><div class="label">Projects</div></div>
+        <div class="stat"><div class="num" id="category-count">0</div><div class="label">Categories</div></div>
+        <div class="stat"><div class="num" id="tech-count">0</div><div class="label">Technologies</div></div>
+    </div>
+</section>
 
 <!-- ═══ Filters ═══ -->
-<div class="filters" id="filters">
-    <button class="active" data-filter="all">All</button>
+<div class="filters-wrap" id="filters-wrap">
+    <div class="filters" id="filters">
+        <button class="active" data-filter="all">All</button>
+    </div>
 </div>
 
 <!-- ═══ Grid ═══ -->
-<div class="grid" id="grid"></div>
+<section class="grid-section">
+    <div class="grid" id="grid"></div>
+</section>
 
 <!-- ═══ Modal ═══ -->
 <div class="modal-overlay" id="modal">
     <div class="modal">
-        <button class="close" onclick="closeModal()">&times;</button>
+        <button class="close" onclick="closeModal()">✕</button>
         <div id="modal-content"></div>
     </div>
 </div>
 
 <!-- ═══ Footer ═══ -->
 <footer>
-    <p>Built with ❤️ by <a href="https://github.com/mustafabozkaya">Mustafa Bozkaya</a> &middot; Projects hosted on <a href="https://github.com/mustafabozkaya/AI-ML-DL-DS_Projects_Portfolio">GitHub</a></p>
+    <p>Built with ❤️ by <a href="https://github.com/mustafabozkaya">Mustafa Bozkaya</a> · Projects on <a href="https://github.com/mustafabozkaya/AI-ML-DL-DS_Projects_Portfolio">GitHub</a></p>
 </footer>
+
+</div><!-- /content -->
 
 <script>
 // ─── Project Data ───
 const projects = [
-    // NEW UPWORK-FOCUSED PROJECTS
     {
         title: "Web Scraper Demo 🌐",
         tag: "Data Extraction",
         tagClass: "tag-de",
         category: "data",
-        description: "Production-grade web scraping toolkit with BeautifulSoup and Requests. Stealth mode with rotating user agents, exponential backoff retry, and multi-format export (CSV/JSON/Excel). CLI interface and Python API for data extraction, price monitoring, and lead generation.",
+        description: "Production-grade web scraping toolkit with BeautifulSoup and Requests. Stealth mode with rotating user agents, exponential backoff retry, and multi-format export (CSV/JSON/Excel).",
         tech: ["Python", "BeautifulSoup", "Requests", "Pandas", "Selenium"],
         details: "A modular web scraper with retry logic, stealth mode (fake user agents), and export to CSV, JSON, Excel, and Parquet. Includes a CLI interface with argparse and a chainable Python API. Perfect for Upwork data collection, scraping, and ETL tasks.",
         link: "web-scraper-demo/"
@@ -227,9 +732,9 @@ const projects = [
         tag: "Data Processing",
         tagClass: "tag-da",
         category: "data",
-        description: "Automated data quality toolkit using Pandas. Detects and fixes missing values, duplicates, outliers, type mismatches, date formatting issues, and whitespace. Generates detailed cleaning reports. Chainable pipeline API with YAML configuration support.",
+        description: "Automated data quality toolkit using Pandas. Detects and fixes missing values, duplicates, outliers, type mismatches, date formatting issues, and whitespace.",
         tech: ["Python", "Pandas", "NumPy", "YAML", "OpenPyXL"],
-        details: "A complete data cleaning solution with automatic profiling, intelligent missing value filling (auto/mean/median/mode), outlier detection (IQR/Z-score), dtype fixing, date standardization, and detailed cleaning reports. Supports CSV, Excel, JSON, and Parquet.",
+        details: "A complete data cleaning solution with automatic profiling, intelligent missing value filling (auto/mean/median/mode), outlier detection (IQR/Z-score), dtype fixing, date standardization, and detailed cleaning reports.",
         link: "data-cleaning-pipeline/"
     },
     {
@@ -237,12 +742,31 @@ const projects = [
         tag: "ML Dataset Tools",
         tagClass: "tag-ml",
         category: "ml",
-        description: "Comprehensive ML dataset management toolkit. Convert between COCO JSON, YOLO TXT, CSV, and Pascal VOC XML formats. Validate annotations (bounds checking, missing files, format errors). Split datasets into train/val/test with statistics and visualization.",
+        description: "Comprehensive ML dataset management toolkit. Convert between COCO JSON, YOLO TXT, CSV, and Pascal VOC XML formats. Validate and split datasets.",
         tech: ["Python", "NumPy", "OpenCV", "Pillow", "TQDM"],
-        details: "Supports bidirectional conversion between all major annotation formats. Validates bounding boxes for out-of-bounds, negative dimensions, and missing image files. Generates dataset statistics and visualizes annotations. Ideal for YOLOv8 training prep.",
+        details: "Supports bidirectional conversion between all major annotation formats. Validates bounding boxes for out-of-bounds, negative dimensions, and missing image files. Generates dataset statistics and visualizes annotations.",
         link: "data-annotation-helper/"
     },
-    // EXISTING PROJECTS
+    {
+        title: "AgentZero 🤖",
+        tag: "Agentic AI",
+        tagClass: "tag-ai",
+        category: "ai",
+        description: "AI agent management platform with JWT auth, CRUD operations, conversation tracking, and usage analytics. Built with Next.js 16 + NestJS 11.",
+        tech: ["Next.js", "NestJS", "PostgreSQL", "Prisma", "JWT"],
+        details: "Full-stack AI agent management platform. Features multi-agent support, conversation history, usage tracking, and billing analytics. 25+ unit tests passing.",
+        link: "https://github.com/mustafabozkaya/agentzero"
+    },
+    {
+        title: "ApexCampus 🎓",
+        tag: "Agentic AI",
+        tagClass: "tag-ai",
+        category: "ai",
+        description: "Modern education platform with course management, mentor chat, and enrollment tracking. SaaS architecture with a polished UI.",
+        tech: ["Next.js", "NestJS", "PostgreSQL", "Prisma", "WebSocket"],
+        details: "Scalable education platform featuring course catalog with categories, real-time mentor chat via WebSockets, enrollment workflows, and progress tracking. 24 tests passing.",
+        link: "https://github.com/mustafabozkaya/apexcampus"
+    },
     {
         title: "Medical Fundus RAG 🏥",
         tag: "Agentic AI",
@@ -250,47 +774,57 @@ const projects = [
         category: "ai",
         description: "Explainable AI for eye disease diagnosis using RAG with BiomedCLIP, Qdrant, and Gemini Pro.",
         tech: ["RAG", "BiomedCLIP", "Qdrant", "Gemini", "FastAPI"],
-        details: "Multi-modal RAG pipeline for medical image diagnosis with explainability features.",
+        details: "Multi-modal RAG pipeline for medical image diagnosis with explainability features. Combines vision-language models with vector search for interpretable diagnoses.",
         link: "https://github.com/mustafabozkaya/medical-fundus-rag"
+    },
+    {
+        title: "AI System Architect 🏗️",
+        tag: "Agentic AI",
+        tagClass: "tag-ai",
+        category: "ai",
+        description: "Autonomous agent that designs system architectures from natural language requirements. Generates diagrams and documentation.",
+        tech: ["Python", "LangChain", "LLM", "Graphviz"],
+        details: "An AI agent that takes natural language requirements and produces complete system architecture diagrams and documentation. Combines LLM reasoning with structural output.",
+        link: "https://github.com/mustafabozkaya/Awesome_Agent_Rag_LMMs_apps"
     },
     {
         title: "Ollama Streamlit Chat 💬",
         tag: "Agentic AI",
         tagClass: "tag-ai",
         category: "ai",
-        description: "Local LLM chat interface with Ollama backend and Streamlit frontend.",
+        description: "Local LLM chat interface with Ollama backend and Streamlit frontend. Privacy-first, runs entirely on your machine.",
         tech: ["Ollama", "Streamlit", "Python", "LangChain"],
-        details: "Privacy-first chat interface running local LLMs through Ollama with streaming responses.",
+        details: "Privacy-first chat interface running local LLMs through Ollama with streaming responses, conversation history, and model switching.",
         link: "https://github.com/mustafabozkaya/ollama-chat-app"
-    },
-    {
-        title: "Awesome Agent, RAG & LLM Apps 🚀",
-        tag: "Agentic AI",
-        tagClass: "tag-ai",
-        category: "ai",
-        description: "80+ open-source AI projects covering AI agents, RAG pipelines, LLM apps, voice AI, MCP agents, fine-tuning, and more. Multi-provider support (OpenAI, Gemini, Ollama, Claude). Production-ready patterns with full documentation.",
-        tech: ["Python", "LangChain", "Gemini", "OpenAI", "Ollama", "RAG", "CrewAI", "ADK", "Agents SDK"],
-        details: "A comprehensive collection of real-world AI implementations. Features: Starter AI Agents (Travel, Research, Medical Imaging, Meme Generator), Advanced Multi-Agent Systems (Finance, Legal, Recruitment), Voice AI Agents, MCP AI Agents (Browser, GitHub, Notion), RAG Tutorials (Agentic RAG, Corrective RAG, Hybrid Search, Vision RAG), LLM Apps with Memory, Chat with X (GitHub, Gmail, PDF, YouTube), LLM Fine-tuning, and full Google ADK + OpenAI Agents SDK Crash Courses.",
-        link: "https://github.com/mustafabozkaya/Awesome_Agent_Rag_LMMs_apps"
     },
     {
         title: "Enterprise Vision AI 👁️",
         tag: "Computer Vision",
         tagClass: "tag-cv",
         category: "cv",
-        description: "Open-source computer vision platform for industrial quality control and inspection.",
+        description: "Open-source computer vision platform for industrial quality control and inspection. End-to-end defect detection pipeline.",
         tech: ["PyTorch", "OpenCV", "ONNX", "FastAPI", "React"],
-        details: "End-to-end CV platform for defect detection, classification, and real-time monitoring in manufacturing.",
+        details: "End-to-end CV platform for defect detection, classification, and real-time monitoring in manufacturing. Supports custom model deployment with ONNX runtime.",
         link: "https://github.com/mustafabozkaya/enterprise-vision-ai"
+    },
+    {
+        title: "ROS2 Navigator 🤖",
+        tag: "Robotics",
+        tagClass: "tag-auto",
+        category: "cv",
+        description: "Autonomous navigation for ROS2-based robots with SLAM and path planning. Real-time obstacle avoidance.",
+        tech: ["ROS2", "SLAM", "Nav2", "Python", "C++"],
+        details: "Full-stack autonomous navigation using ROS2 Humble with real-time obstacle avoidance and mapping. Includes simulation environment and real robot deployment.",
+        link: "https://github.com/mustafabozkaya/Awesome_Agent_Rag_LMMs_apps"
     },
     {
         title: "Car Price Prediction 🚗",
         tag: "Machine Learning",
         tagClass: "tag-ml",
         category: "ml",
-        description: "Predict used car prices using regression models with feature engineering.",
+        description: "Used car price prediction using regression models with comprehensive feature engineering and model comparison.",
         tech: ["Python", "Scikit-learn", "Pandas", "Matplotlib"],
-        details: "Comparative analysis of Linear Regression, Random Forest, and XGBoost for car price prediction.",
+        details: "Comparative analysis of Linear Regression, Random Forest, and XGBoost for car price prediction. Includes feature engineering, hyperparameter tuning, and model evaluation.",
         link: "Car-price-prediction-project/"
     },
     {
@@ -298,9 +832,9 @@ const projects = [
         tag: "Machine Learning",
         tagClass: "tag-ml",
         category: "ml",
-        description: "Housing price prediction with advanced regression techniques.",
+        description: "Housing price prediction with advanced regression techniques and thorough exploratory data analysis.",
         tech: ["Python", "Scikit-learn", "Pandas", "Seaborn"],
-        details: "End-to-end ML pipeline for predicting house prices using California housing data.",
+        details: "End-to-end ML pipeline for predicting house prices using California housing data. Includes EDA, feature engineering, and model evaluation.",
         link: "House_price_prediction/"
     },
     {
@@ -308,9 +842,9 @@ const projects = [
         tag: "Data Science",
         tagClass: "tag-ds",
         category: "data",
-        description: "Predict equipment failure in manufacturing using sensor data analysis.",
+        description: "Predict equipment failure in manufacturing using sensor data analysis. Classification models to reduce downtime.",
         tech: ["Python", "Scikit-learn", "Time Series", "Pandas"],
-        details: "Classification models to predict machine failure before it happens, reducing downtime.",
+        details: "Classification models to predict machine failure before it happens, reducing downtime. Feature extraction from time-series sensor data and model comparison.",
         link: "Predictive_Maintance_Analysis/"
     },
     {
@@ -318,9 +852,9 @@ const projects = [
         tag: "Deep Learning",
         tagClass: "tag-ml",
         category: "ml",
-        description: "Multi-model lung cancer prediction using medical imaging and ensemble methods.",
+        description: "Multi-model lung cancer prediction using medical imaging and ensemble methods with deep learning.",
         tech: ["TensorFlow", "Keras", "CNN", "Python"],
-        details: "Comparative study of multiple deep learning architectures for lung cancer classification.",
+        details: "Comparative study of multiple deep learning architectures for lung cancer classification using medical imaging data. Ensemble approach for improved accuracy.",
         link: "Lung cancer prediction multi models/"
     },
     {
@@ -328,41 +862,10 @@ const projects = [
         tag: "Data Science",
         tagClass: "tag-ds",
         category: "data",
-        description: "Uncertainty quantification in ML predictions using conformal prediction.",
-        tech: ["Python", "Conformal", "Scikit-learn", "NumPy"],
-        details: "Implementation of conformal prediction methods for reliable ML uncertainty estimation.",
+        description: "Uncertainty quantification in ML predictions using conformal prediction methods for reliable estimates.",
+        tech: ["Python", "Statistics", "Scikit-learn", "NumPy"],
+        details: "Implementation of conformal prediction methods for reliable ML uncertainty estimation. Provides prediction sets with statistical guarantees.",
         link: "Conformal/"
-    },
-    // SAAS PROJECTS
-    {
-        title: "AgentZero 🤖",
-        tag: "Agentic AI",
-        tagClass: "tag-ai",
-        category: "ai",
-        description: "AI Agent Platform with JWT auth, agents CRUD, conversations, usage tracking, and rate limiting.",
-        tech: ["Next.js", "NestJS", "Tailwind", "PostgreSQL", "Prisma", "JWT", "Vercel"],
-        details: "Full-stack AI agent management platform built with Next.js 16 + NestJS 11 monorepo, Turborepo, Tailwind v4/shadcn/ui, Prisma 7 PostgreSQL. Features: JWT authentication, agents CRUD, conversation management, usage tracking, 25+ unit tests.",
-        link: "https://agentzero-pi.vercel.app"
-    },
-    {
-        title: "ApexCampus 🎓",
-        tag: "Agentic AI",
-        tagClass: "tag-ai",
-        category: "ai",
-        description: "Online learning platform with courses, mentor chat, enrollments, and progress tracking.",
-        tech: ["Next.js", "NestJS", "Tailwind", "PostgreSQL", "Prisma", "WebSocket", "Vercel"],
-        details: "Full-stack educational platform built with Next.js 16 + NestJS 11 monorepo, Turborepo, Tailwind v4/shadcn/ui, Prisma 7 PostgreSQL. Features: course management, mentor chat, enrollment system, progress tracking, 24+ unit tests.",
-        link: "https://apexcampus.vercel.app"
-    },
-    {
-        title: "TrendPulse 📈",
-        tag: "Agentic AI",
-        tagClass: "tag-ai",
-        category: "ai",
-        description: "Trend discovery platform aggregating trending topics from Web, Reddit, Hacker News, and YouTube in real-time.",
-        tech: ["Next.js", "React", "Tailwind", "Auth.js", "Firecrawl", "Vercel"],
-        details: "Full-stack trend aggregator built with Next.js 16 + React 19 + Tailwind v4. Pulls trending topics from web search, Reddit, Hacker News and YouTube. Features: real-time aggregation, topic categorization, trend scoring, period filtering, and responsive dashboard UI with Auth.js authentication.",
-        link: "https://trendpulse-green.vercel.app"
     }
 ];
 
@@ -375,7 +878,6 @@ document.getElementById('project-count').textContent = projects.length;
 document.getElementById('category-count').textContent = categories.length;
 document.getElementById('tech-count').textContent = allTech.length;
 
-// Add filter buttons from tags
 const filterContainer = document.getElementById('filters');
 tags.forEach(tag => {
     const btn = document.createElement('button');
@@ -385,7 +887,6 @@ tags.forEach(tag => {
     filterContainer.appendChild(btn);
 });
 
-// Also add category-based buttons
 categories.forEach(cat => {
     const btn = document.createElement('button');
     const label = { ai: 'Agentic AI', ml: 'ML/DL', data: 'Data Engineering', cv: 'CV/Robotics' }[cat] || cat;
@@ -395,29 +896,45 @@ categories.forEach(cat => {
     filterContainer.appendChild(btn);
 });
 
+let currentFilter = 'all';
+
 function filterProjects(filter) {
-    document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
-    document.querySelector(`.filters button[data-filter="${filter}"]`)?.classList.add('active');
-    document.querySelector('.filters button[data-filter="all"]')?.classList.add('active');
-    // Redundant with above — keep all for "all" filter
+    currentFilter = filter;
     document.querySelectorAll('.filters button').forEach(b => {
-        if (b.dataset.filter === filter) b.classList.add('active');
+        b.classList.toggle('active', b.dataset.filter === filter);
+        if (filter === 'all' && b.dataset.filter === 'all') b.classList.add('active');
     });
-    if (filter === 'all') {
-        document.querySelector('.filters button[data-filter="all"]').classList.add('active');
-    }
 
     const filtered = filter === 'all'
         ? projects
         : projects.filter(p => p.category === filter || p.tag === filter);
 
-    renderGrid(filtered);
+    // Animate out, then in
+    const grid = document.getElementById('grid');
+    const cards = grid.querySelectorAll('.card');
+    if (cards.length) {
+        gsap.to(cards, {
+            opacity: 0,
+            y: 20,
+            scale: 0.95,
+            duration: 0.25,
+            stagger: 0.02,
+            ease: 'power2.in',
+            onComplete: () => {
+                renderGrid(filtered);
+                animateGridItems();
+            }
+        });
+    } else {
+        renderGrid(filtered);
+        animateGridItems();
+    }
 }
 
 function renderGrid(items) {
     const grid = document.getElementById('grid');
-    grid.innerHTML = items.map(p => `
-        <div class="card" onclick="openModal(${projects.indexOf(p)})">
+    grid.innerHTML = items.map((p, i) => `
+        <div class="card" onclick="openModal(${projects.indexOf(p)})" data-index="${i}">
             <span class="tag ${p.tagClass}">${p.tag}</span>
             <h3>${p.title}</h3>
             <p>${p.description}</p>
@@ -427,26 +944,212 @@ function renderGrid(items) {
     `).join('');
 }
 
+function animateGridItems() {
+    const cards = document.querySelectorAll('#grid .card');
+    if (!cards.length || !window.gsap) return;
+    gsap.to(cards, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.5,
+        stagger: 0.04,
+        ease: 'power3.out',
+        overwrite: 'auto'
+    });
+}
+
 function openModal(index) {
     const p = projects[index];
     document.getElementById('modal-content').innerHTML = `
         <span class="tag ${p.tagClass} badge">${p.tag}</span>
         <h2>${p.title}</h2>
         <p>${p.details}</p>
-        <div class="tech" style="margin-bottom:1rem">${p.tech.map(t => `<span>${t}</span>`).join('')}</div>
-        <a href="${p.link}" class="button">🔗 View Project →</a>
+        <div class="tech-strip">${p.tech.map(t => `<span>${t}</span>`).join('')}</div>
+        <a href="${p.link}" class="button" target="_blank">🔗 View Project →</a>
     `;
     document.getElementById('modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
     document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow = '';
 }
 
 document.getElementById('modal').addEventListener('click', (e) => {
     if (e.target === e.currentTarget) closeModal();
 });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+// ─── Three.js Particle Background ───
+(function initParticles() {
+    const canvas = document.getElementById('particle-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouseX = 0, mouseY = 0;
+    let animationId;
+
+    const NUM_PARTICLES = 60;
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    function createParticles() {
+        particles = [];
+        for (let i = 0; i < NUM_PARTICLES; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2 + 0.5,
+                speedX: (Math.random() - 0.5) * 0.3,
+                speedY: (Math.random() - 0.5) * 0.3,
+                opacity: Math.random() * 0.5 + 0.1
+            });
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw particles
+        particles.forEach(p => {
+            p.x += p.speedX + (mouseX - canvas.width/2) * 0.0001;
+            p.y += p.speedY + (mouseY - canvas.height/2) * 0.0001;
+
+            // Wrap around
+            if (p.x < 0) p.x = canvas.width;
+            if (p.x > canvas.width) p.x = 0;
+            if (p.y < 0) p.y = canvas.height;
+            if (p.y > canvas.height) p.y = 0;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(56, 189, 248, ${p.opacity})`;
+            ctx.fill();
+        });
+
+        // Draw connections
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 150) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(56, 189, 248, ${(1 - dist/150) * 0.08})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            }
+        }
+
+        animationId = requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', () => {
+        resize();
+        createParticles();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    resize();
+    createParticles();
+    draw();
+})();
+
+// ─── GSAP Animations ───
+document.addEventListener('DOMContentLoaded', () => {
+    // Wait for GSAP to load, then animate
+    function checkGSAP() {
+        if (typeof gsap !== 'undefined') {
+            initGSAP();
+        } else {
+            // Fallback: just show everything
+            document.querySelectorAll('.hero-badge, #hero-title, .hero-subtitle, .hero-cta, .scroll-indicator').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            });
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(c => { c.style.opacity = '1'; c.style.transform = 'none'; });
+            const stats = document.querySelectorAll('.stat');
+            stats.forEach(s => { s.style.opacity = '1'; s.style.transform = 'none'; });
+        }
+    }
+
+    function initGSAP() {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Timeline: Hero Entrance
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        tl.to('#hero-badge', { opacity: 1, y: 0, duration: 0.6 })
+          .to('#hero-title', { opacity: 1, y: 0, duration: 0.8 }, '-=0.3')
+          .to('.hero-subtitle', { opacity: 1, y: 0, duration: 0.6 }, '-=0.4')
+          .to('#hero-cta', { opacity: 1, y: 0, duration: 0.5 }, '-=0.3')
+          .to('#scroll-indicator', { opacity: 1, duration: 0.6 }, '-=0.2');
+
+        // Stats animate on scroll
+        gsap.to('.stat', {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.15,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.stats-section',
+                start: 'top 85%',
+                toggleActions: 'play none none reverse'
+            }
+        });
+
+        // Cards animate on scroll
+        gsap.to('.card', {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.05,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: '.grid',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            }
+        });
+
+        // Number counter animation on stats
+        function animateCount(el, target) {
+            const obj = { val: 0 };
+            gsap.to(obj, {
+                val: target,
+                duration: 1.5,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: '.stats-section',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                },
+                onUpdate: () => {
+                    el.textContent = Math.round(obj.val);
+                }
+            });
+        }
+
+        animateCount(document.getElementById('project-count'), projects.length);
+        animateCount(document.getElementById('category-count'), categories.length);
+        animateCount(document.getElementById('tech-count'), allTech.length);
+    }
+
+    checkGSAP();
+});
 
 // Initial render
 renderGrid(projects);
