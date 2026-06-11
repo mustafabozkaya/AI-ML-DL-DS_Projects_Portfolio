@@ -1,430 +1,564 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mustafa Bozkaya — AI/ML Project Portfolio</title>
-    <meta name="description" content="AI, Machine Learning, Data Science, and Data Engineering project portfolio by Mustafa Bozkaya" />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>" />
-    <style>
-        /* ─── Reset & Base ─── */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        :root {
-            --bg: #0f172a;
-            --surface: #1e293b;
-            --surface-hover: #273548;
-            --border: #334155;
-            --text: #f1f5f9;
-            --text-muted: #94a3b8;
-            --accent: #38bdf8;
-            --accent2: #a78bfa;
-            --green: #34d399;
-            --radius: 12px;
-            --shadow: 0 4px 24px rgba(0,0,0,.4);
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mustafa Bozkaya — AI/ML Project Portfolio</title>
+  <meta name="description" content="AI, Machine Learning, Data Science, and Data Engineering project portfolio by Mustafa Bozkaya" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset ─── */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fafbfc;color:#0f172a;line-height:1.6;overflow-x:hidden}
+    a{text-decoration:none}
+    img{max-width:100%;display:block}
 
-        /* ─── Header ─── */
-        header {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border-bottom: 1px solid var(--border);
-            padding: 3rem 1.5rem 2rem;
-            text-align: center;
-        }
-        header h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -.02em; }
-        header h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        header p { color: var(--text-muted); max-width: 600px; margin: .75rem auto 0; font-size: 1.05rem; }
-        header .links { margin-top: 1.25rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-        header .links a {
-            color: var(--accent); text-decoration: none; font-size: .9rem; font-weight: 600;
-            padding: .4rem 1rem; border: 1px solid var(--accent); border-radius: 999px;
-            transition: .2s;
-        }
-        header .links a:hover { background: var(--accent); color: #0f172a; }
+    /* ─── Variables ─── */
+    :root{
+      --bg:#fafbfc;
+      --surface:#ffffff;
+      --surface-glass:rgba(255,255,255,.72);
+      --border:#e9edf2;
+      --text:#0f172a;
+      --text-muted:#64748b;
+      --text-light:#94a3b8;
+      --accent:#6366f1;
+      --accent-light:#eef2ff;
+      --accent2:#8b5cf6;
+      --green:#10b981;
+      --radius:16px;
+      --shadow:0 1px 3px rgba(0,0,0,.04),0 8px 32px rgba(0,0,0,.06);
+      --shadow-hover:0 8px 40px rgba(99,102,241,.12);
+      --max-w:1280px;
+      --nav-h:72px;
+    }
 
-        /* ─── Stats Bar ─── */
-        .stats {
-            display: flex; gap: 2rem; justify-content: center; padding: 1.5rem 1rem;
-            background: var(--surface); border-bottom: 1px solid var(--border); flex-wrap: wrap;
-        }
-        .stats .stat { text-align: center; }
-        .stats .stat .num { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
-        .stats .stat .label { font-size: .8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; }
+    /* ─── Navigation ─── */
+    nav{
+      position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:999;
+      background:rgba(250,251,252,.82);backdrop-filter:blur(16px) saturate(1.4);
+      border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 2rem;transition:.3s;
+    }
+    nav .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.25rem;color:var(--text);letter-spacing:-.02em}
+    nav .logo span{color:var(--accent)}
+    nav .nav-links{display:flex;gap:.25rem;align-items:center}
+    nav .nav-links a{
+      padding:.5rem .85rem;border-radius:8px;font-size:.85rem;font-weight:500;
+      color:var(--text-muted);transition:.2s;white-space:nowrap;
+    }
+    nav .nav-links a:hover{color:var(--text);background:var(--accent-light)}
+    nav .nav-links a.primary{background:var(--accent);color:#fff;font-weight:600}
+    nav .nav-links a.primary:hover{background:#4f46e5;color:#fff}
+    nav .menu-btn{display:none;background:none;border:none;cursor:pointer;padding:.5rem;color:var(--text)}
 
-        /* ─── Filters ─── */
-        .filters {
-            display: flex; gap: .5rem; justify-content: center; padding: 1.5rem 1rem;
-            flex-wrap: wrap; position: sticky; top: 0; background: var(--surface);
-            border-bottom: 1px solid var(--border); z-index: 10;
-        }
-        .filters button {
-            background: transparent; color: var(--text-muted); border: 1px solid var(--border);
-            padding: .4rem 1rem; border-radius: 999px; cursor: pointer; font-size: .85rem;
-            transition: .2s; font-weight: 500;
-        }
-        .filters button:hover { border-color: var(--accent); color: var(--text); }
-        .filters button.active { background: var(--accent); color: #0f172a; border-color: var(--accent); font-weight: 700; }
+    @media(max-width:900px){
+      nav{padding:0 1rem}
+      nav .nav-links{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:var(--surface);border-bottom:1px solid var(--border);flex-direction:column;padding:1rem;gap:.25rem;box-shadow:var(--shadow)}
+      nav .nav-links.open{display:flex}
+      nav .nav-links a{width:100%;padding:.75rem 1rem}
+      nav .menu-btn{display:block}
+    }
 
-        /* ─── Project Grid ─── */
-        .grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 1.25rem; padding: 1.5rem; max-width: 1280px; margin: 0 auto;
-        }
-        .card {
-            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-            padding: 1.5rem; transition: .25s; display: flex; flex-direction: column;
-            box-shadow: var(--shadow); cursor: pointer; position: relative; overflow: hidden;
-        }
-        .card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--accent2)); opacity: 0;
-            transition: .25s;
-        }
-        .card:hover { transform: translateY(-4px); border-color: var(--accent); }
-        .card:hover::before { opacity: 1; }
-        .card .tag {
-            display: inline-block; font-size: .7rem; font-weight: 700; text-transform: uppercase;
-            letter-spacing: .05em; padding: .2rem .6rem; border-radius: 4px; margin-bottom: .75rem;
-            width: fit-content;
-        }
-        .card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: .5rem; line-height: 1.3; }
-        .card p { color: var(--text-muted); font-size: .9rem; line-height: 1.5; flex: 1; }
-        .card .tech {
-            display: flex; gap: .4rem; flex-wrap: wrap; margin-top: 1rem; padding-top: 1rem;
-            border-top: 1px solid var(--border);
-        }
-        .card .tech span {
-            background: var(--bg); color: var(--text-muted); font-size: .75rem; padding: .15rem .6rem;
-            border-radius: 4px; font-weight: 500;
-        }
-        .card .footer-link {
-            margin-top: .75rem; display: flex; align-items: center; gap: .4rem;
-            color: var(--accent); text-decoration: none; font-size: .85rem; font-weight: 600;
-        }
-        .card .footer-link:hover { text-decoration: underline; }
+    /* ─── Hero ─── */
+    #hero{
+      min-height:100vh;display:flex;align-items:center;justify-content:center;
+      text-align:center;padding:calc(var(--nav-h) + 2rem) 2rem 4rem;position:relative;
+      background:linear-gradient(160deg,#fafbfc 0%,#f0f2ff 40%,#fafbfc 100%);
+      overflow:hidden;
+    }
+    #hero canvas#particles-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+    #hero .hero-content{position:relative;z-index:1;max-width:800px}
+    #hero .hero-badge{
+      display:inline-block;padding:.4rem 1.2rem;border-radius:999px;font-size:.8rem;font-weight:600;
+      background:var(--accent-light);color:var(--accent);margin-bottom:1.5rem;letter-spacing:.02em;
+    }
+    #hero h1{
+      font-family:'Space Grotesk',sans-serif;font-size:clamp(2.8rem,6vw,4.8rem);
+      font-weight:800;line-height:1.1;letter-spacing:-.035em;margin-bottom:1rem;
+    }
+    #hero h1 .gradient-text{
+      background:linear-gradient(135deg,var(--accent),var(--accent2),#ec4899);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    #hero p{
+      font-size:clamp(1.05rem,1.8vw,1.25rem);color:var(--text-muted);
+      max-width:580px;margin:0 auto 2rem;line-height:1.7;
+    }
+    #hero .hero-actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+    #hero .hero-actions a{
+      padding:.7rem 1.6rem;border-radius:10px;font-weight:600;font-size:.95rem;
+      transition:.25s;display:inline-flex;align-items:center;gap:.5rem;
+    }
+    #hero .hero-actions a.btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 20px rgba(99,102,241,.35)}
+    #hero .hero-actions a.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(99,102,241,.45)}
+    #hero .hero-actions a.btn-outline{border:2px solid var(--border);color:var(--text)}
+    #hero .hero-actions a.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+    #hero .hero-stats{
+      display:flex;gap:2.5rem;justify-content:center;margin-top:3rem;flex-wrap:wrap
+    }
+    #hero .hero-stats .stat{text-align:center}
+    #hero .hero-stats .stat .num{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:800;color:var(--accent)}
+    #hero .hero-stats .stat .label{font-size:.8rem;color:var(--text-light);text-transform:uppercase;letter-spacing:.06em;margin-top:.15rem}
+    .scroll-indicator{
+      position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+      width:24px;height:40px;border:2px solid var(--border);border-radius:12px;
+      display:flex;justify-content:center;padding:6px 0;
+    }
+    .scroll-indicator::after{
+      content:'';width:3px;height:8px;border-radius:2px;background:var(--accent);
+      animation:scroll-bounce 2s ease-in-out infinite;
+    }
+    @keyframes scroll-bounce{0%,100%{transform:translateY(0);opacity:1}50%{transform:translateY(8px);opacity:.4}}
 
-        /* ─── Tag Colors ─── */
-        .tag-ml { background: #3b82f680; color: #93c5fd; }
-        .tag-ds { background: #10b98180; color: #6ee7b7; }
-        .tag-ai { background: #8b5cf680; color: #c4b5fd; }
-        .tag-web { background: #f59e0b80; color: #fcd34d; }
-        .tag-de { background: #06b6d480; color: #67e8f9; }
-        .tag-cv { background: #ef444480; color: #fca5a5; }
-        .tag-da { background: #ec489980; color: #f9a8d4; }
-        .tag-auto { background: #14b8a680; color: #5eead4; }
+    /* ─── Section ─── */
+    section{padding:5rem 2rem}
+    section .section-label{
+      display:inline-block;padding:.35rem 1rem;border-radius:999px;font-size:.8rem;font-weight:600;
+      background:var(--accent-light);color:var(--accent);margin-bottom:1rem;letter-spacing:.02em;
+    }
+    section h2{
+      font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,3.5vw,2.8rem);
+      font-weight:800;letter-spacing:-.03em;margin-bottom:.75rem;
+    }
+    section .section-sub{color:var(--text-muted);font-size:1.1rem;max-width:600px;margin-bottom:3rem}
 
-        /* ─── Modal ─── */
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 100; justify-content: center; align-items: center; padding: 1rem; }
-        .modal-overlay.open { display: flex; }
-        .modal {
-            background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-            max-width: 700px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 2rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,.6); position: relative;
-        }
-        .modal .close {
-            position: absolute; top: 1rem; right: 1rem; background: none; border: none;
-            color: var(--text-muted); font-size: 1.5rem; cursor: pointer; padding: .25rem;
-            line-height: 1;
-        }
-        .modal .close:hover { color: var(--text); }
-        .modal h2 { font-size: 1.5rem; margin-bottom: .5rem; }
-        .modal .badge { margin-bottom: 1rem; }
-        .modal p { color: var(--text-muted); margin-bottom: 1rem; }
-        .modal pre {
-            background: var(--bg); padding: 1rem; border-radius: 8px; overflow-x: auto;
-            font-size: .85rem; margin: 1rem 0; border: 1px solid var(--border);
-        }
-        .modal a.button {
-            display: inline-block; background: var(--accent); color: #0f172a; font-weight: 700;
-            padding: .6rem 1.5rem; border-radius: 8px; text-decoration: none; margin-top: .5rem;
-        }
+    /* ─── Filters ─── */
+    .filters-scroll{
+      display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;
+      padding:1.5rem 0;position:sticky;top:var(--nav-h);z-index:20;
+      background:var(--bg);border-bottom:1px solid var(--border);
+    }
+    .filters-scroll button{
+      padding:.45rem 1.1rem;border-radius:999px;border:1.5px solid var(--border);
+      background:transparent;color:var(--text-muted);cursor:pointer;font-size:.85rem;font-weight:500;
+      transition:.2s;font-family:'Inter',sans-serif;
+    }
+    .filters-scroll button:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+    .filters-scroll button.active{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
 
-        /* ─── Footer ─── */
-        footer {
-            text-align: center; padding: 2rem 1rem; color: var(--text-muted); font-size: .85rem;
-            border-top: 1px solid var(--border); margin-top: 2rem;
-        }
-        footer a { color: var(--accent); text-decoration: none; }
+    /* ─── Grid ─── */
+    .grid{
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+      gap:1.25rem;padding:2rem;max-width:var(--max-w);margin:0 auto;
+    }
+    .card{
+      background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      padding:1.75rem;transition:.35s cubic-bezier(.22,1,.36,1);
+      display:flex;flex-direction:column;box-shadow:var(--shadow);cursor:pointer;
+      position:relative;overflow:hidden;opacity:0;transform:translateY(30px);
+    }
+    .card.revealed{opacity:1;transform:translateY(0)}
+    .card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:3px;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:0;transition:.35s;
+    }
+    .card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:var(--shadow-hover)}
+    .card:hover::before{opacity:1}
+    .card .tag{
+      display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.06em;padding:.25rem .65rem;border-radius:6px;margin-bottom:.85rem;
+      width:fit-content;
+    }
+    .card h3{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:.5rem;letter-spacing:-.01em}
+    .card p{color:var(--text-muted);font-size:.9rem;line-height:1.6;flex:1}
+    .card .tech{
+      display:flex;gap:.35rem;flex-wrap:wrap;margin-top:1rem;padding-top:1rem;
+      border-top:1px solid var(--border);
+    }
+    .card .tech span{
+      background:#f1f5f9;color:var(--text-muted);font-size:.75rem;padding:.15rem .6rem;
+      border-radius:5px;font-weight:500;
+    }
+    .card .footer-link{
+      margin-top:.85rem;display:inline-flex;align-items:center;gap:.35rem;
+      color:var(--accent);font-size:.85rem;font-weight:600;transition:.2s;
+    }
+    .card .footer-link:hover{gap:.6rem}
 
-        /* ─── Responsive ─── */
-        @media (max-width: 640px) {
-            header h1 { font-size: 1.6rem; }
-            .grid { grid-template-columns: 1fr; padding: 1rem; }
-            .stats { gap: 1rem; }
-            .filters { gap: .35rem; }
-            .filters button { font-size: .8rem; padding: .3rem .7rem; }
-        }
-    </style>
+    /* ─── Tag Colors (light) ─── */
+    .tag-ml{background:#dbeafe;color:#1d4ed8}
+    .tag-ds{background:#d1fae5;color:#047857}
+    .tag-ai{background:#ede9fe;color:#6d28d9}
+    .tag-cv{background:#fce7f3;color:#be185d}
+    .tag-de{background:#cffafe;color:#0e7490}
+    .tag-da{background:#fce7f3;color:#be185d}
+
+    /* ─── Modal ─── */
+    .modal-overlay{
+      display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);
+      z-index:1000;justify-content:center;align-items:center;padding:1rem;
+      backdrop-filter:blur(4px);
+    }
+    .modal-overlay.open{display:flex}
+    .modal{
+      background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+      max-width:680px;width:100%;max-height:85vh;overflow-y:auto;padding:2.5rem;
+      box-shadow:0 25px 80px rgba(0,0,0,.15);position:relative;
+    }
+    .modal .close{
+      position:absolute;top:1.25rem;right:1.25rem;background:none;border:none;
+      color:var(--text-light);font-size:1.5rem;cursor:pointer;padding:.25rem;line-height:1;border-radius:6px;transition:.2s;
+    }
+    .modal .close:hover{background:#f1f5f9;color:var(--text)}
+    .modal h2{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;margin:.75rem 0 .5rem}
+    .modal .badge{margin-bottom:.25rem}
+    .modal p{color:var(--text-muted);margin-bottom:1.25rem;line-height:1.7}
+    .modal .tech{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:1.5rem}
+    .modal .tech span{background:#f1f5f9;color:var(--text-muted);font-size:.8rem;padding:.2rem .65rem;border-radius:5px}
+    .modal a.button{
+      display:inline-flex;align-items:center;gap:.5rem;
+      background:var(--accent);color:#fff;font-weight:600;
+      padding:.7rem 1.6rem;border-radius:10px;transition:.2s;
+    }
+    .modal a.button:hover{background:#4f46e5;transform:translateY(-1px)}
+
+    /* ─── Footer ─── */
+    footer{
+      text-align:center;padding:3rem 2rem;color:var(--text-light);font-size:.85rem;
+      border-top:1px solid var(--border);margin-top:2rem;
+    }
+    footer a{color:var(--accent);font-weight:500}
+    footer a:hover{text-decoration:underline}
+
+    /* ─── Responsive ─── */
+    @media(max-width:640px){
+      #hero{padding:calc(var(--nav-h) + 1.5rem) 1.25rem 3rem}
+      #hero .hero-stats{gap:1.5rem}
+      #hero .hero-stats .stat .num{font-size:1.5rem}
+      .grid{grid-template-columns:1fr;padding:1rem}
+      section{padding:3rem 1.25rem}
+      section .section-sub{margin-bottom:2rem}
+    }
+  </style>
 </head>
 <body>
 
-<!-- ═══ Header ═══ -->
-<header>
-    <h1>🧠 <span>AI/ML Project Portfolio</span></h1>
-    <p>Mustafa Bozkaya — AI Platform Engineer, Data Scientist, and Full-Stack Python Developer</p>
-    <div class="links">
-        <a href="https://github.com/mustafabozkaya">GitHub</a>
-        <a href="https://www.linkedin.com/in/mustafa-bozkaya">LinkedIn</a>
-        <a href="https://mustafabozkaya.github.io">Main Site</a>
-        <a href="https://github.com/mustafabozkaya/AI-ML-DL-DS_Projects_Portfolio">Repo</a>
+  <!-- ═══ Navigation ═══ -->
+  <nav id="navbar">
+    <a href="#" class="logo">MB<span>.</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="https://github.com/mustafabozkaya">🐙 GitHub</a>
+      <a href="https://www.linkedin.com/in/mustafa-bozkaya">💼 LinkedIn</a>
+      <a href="https://mustafabozkaya.github.io">🌐 Main Site</a>
+      <a href="https://github.com/mustafabozkaya/AI-ML-DL-DS_Projects_Portfolio">📂 Repo</a>
+      <a href="https://agentzero-pi.vercel.app" class="primary">AgentZero</a>
+      <a href="https://apexcampus.vercel.app" class="primary">ApexCampus</a>
     </div>
-</header>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+  </nav>
 
-<!-- ═══ Stats ═══ -->
-<div class="stats" id="stats-bar">
-    <div class="stat"><div class="num" id="project-count">0</div><div class="label">Projects</div></div>
-    <div class="stat"><div class="num" id="category-count">0</div><div class="label">Categories</div></div>
-    <div class="stat"><div class="num" id="tech-count">0</div><div class="label">Technologies</div></div>
-</div>
+  <!-- ═══ Hero ═══ -->
+  <section id="hero">
+    <canvas id="particles-canvas"></canvas>
+    <div class="hero-content">
+      <div class="hero-badge">AI Engineer &middot; MLOps &middot; Generative AI</div>
+      <h1>
+        Engineering AI Systems<br/>
+        <span class="gradient-text">from Data to Agents</span>
+      </h1>
+      <p>Mustafa Bozkaya — building production-grade AI platforms, autonomous agents, and data pipelines with modern infrastructure.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">Explore Projects ↓</a>
+        <a href="https://github.com/mustafabozkaya" class="btn-outline">🐙 GitHub</a>
+        <a href="https://www.linkedin.com/in/mustafa-bozkaya" class="btn-outline">💼 LinkedIn</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="num" id="hs-projects">0</div><div class="label">Projects</div></div>
+        <div class="stat"><div class="num" id="hs-categories">0</div><div class="label">Categories</div></div>
+        <div class="stat"><div class="num" id="hs-tech">0</div><div class="label">Technologies</div></div>
+      </div>
+    </div>
+    <div class="scroll-indicator"></div>
+  </section>
 
-<!-- ═══ Filters ═══ -->
-<div class="filters" id="filters">
-    <button class="active" data-filter="all">All</button>
-</div>
+  <!-- ═══ Projects ═══ -->
+  <section id="projects">
+    <div style="max-width:var(--max-w);margin:0 auto;text-align:center">
+      <span class="section-label">Portfolio</span>
+      <h2>Featured Projects</h2>
+      <p class="section-sub" style="margin:0 auto 0">AI agents, machine learning models, data pipelines, and computer vision platforms</p>
+    </div>
 
-<!-- ═══ Grid ═══ -->
-<div class="grid" id="grid"></div>
+    <div class="filters-scroll" id="filters">
+      <button class="active" data-filter="all">All</button>
+    </div>
 
-<!-- ═══ Modal ═══ -->
-<div class="modal-overlay" id="modal">
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- ═══ Modal ═══ -->
+  <div class="modal-overlay" id="modal">
     <div class="modal">
-        <button class="close" onclick="closeModal()">&times;</button>
-        <div id="modal-content"></div>
+      <button class="close" onclick="closeModal()">✕</button>
+      <div id="modal-content"></div>
     </div>
-</div>
+  </div>
 
-<!-- ═══ Footer ═══ -->
-<footer>
-    <p>Built with ❤️ by <a href="https://github.com/mustafabozkaya">Mustafa Bozkaya</a> &middot; Projects hosted on <a href="https://github.com/mustafabozkaya/AI-ML-DL-DS_Projects_Portfolio">GitHub</a></p>
-</footer>
+  <!-- ═══ Footer ═══ -->
+  <footer>
+    <p>Built with <span style="color:#ef4444">❤</span> by <a href="https://github.com/mustafabozkaya">Mustafa Bozkaya</a> &middot; <a href="https://github.com/mustafabozkaya/AI-ML-DL-DS_Projects_Portfolio">View on GitHub</a></p>
+  </footer>
 
-<script>
-// ─── Project Data ───
-const projects = [
-    // NEW UPWORK-FOCUSED PROJECTS
-    {
-        title: "Web Scraper Demo 🌐",
-        tag: "Data Extraction",
-        tagClass: "tag-de",
-        category: "data",
-        description: "Production-grade web scraping toolkit with BeautifulSoup and Requests. Stealth mode with rotating user agents, exponential backoff retry, and multi-format export (CSV/JSON/Excel). CLI interface and Python API for data extraction, price monitoring, and lead generation.",
-        tech: ["Python", "BeautifulSoup", "Requests", "Pandas", "Selenium"],
-        details: "A modular web scraper with retry logic, stealth mode (fake user agents), and export to CSV, JSON, Excel, and Parquet. Includes a CLI interface with argparse and a chainable Python API. Perfect for Upwork data collection, scraping, and ETL tasks.",
-        link: "web-scraper-demo/"
-    },
-    {
-        title: "Data Cleaning Pipeline 🧹",
-        tag: "Data Processing",
-        tagClass: "tag-da",
-        category: "data",
-        description: "Automated data quality toolkit using Pandas. Detects and fixes missing values, duplicates, outliers, type mismatches, date formatting issues, and whitespace. Generates detailed cleaning reports. Chainable pipeline API with YAML configuration support.",
-        tech: ["Python", "Pandas", "NumPy", "YAML", "OpenPyXL"],
-        details: "A complete data cleaning solution with automatic profiling, intelligent missing value filling (auto/mean/median/mode), outlier detection (IQR/Z-score), dtype fixing, date standardization, and detailed cleaning reports. Supports CSV, Excel, JSON, and Parquet.",
-        link: "data-cleaning-pipeline/"
-    },
-    {
-        title: "Data Annotation Helper 🏷️",
-        tag: "ML Dataset Tools",
-        tagClass: "tag-ml",
-        category: "ml",
-        description: "Comprehensive ML dataset management toolkit. Convert between COCO JSON, YOLO TXT, CSV, and Pascal VOC XML formats. Validate annotations (bounds checking, missing files, format errors). Split datasets into train/val/test with statistics and visualization.",
-        tech: ["Python", "NumPy", "OpenCV", "Pillow", "TQDM"],
-        details: "Supports bidirectional conversion between all major annotation formats. Validates bounding boxes for out-of-bounds, negative dimensions, and missing image files. Generates dataset statistics and visualizes annotations. Ideal for YOLOv8 training prep.",
-        link: "data-annotation-helper/"
-    },
-    // EXISTING PROJECTS
-    {
-        title: "Medical Fundus RAG 🏥",
-        tag: "Agentic AI",
-        tagClass: "tag-ai",
-        category: "ai",
-        description: "Explainable AI for eye disease diagnosis using RAG with BiomedCLIP, Qdrant, and Gemini Pro.",
-        tech: ["RAG", "BiomedCLIP", "Qdrant", "Gemini", "FastAPI"],
-        details: "Multi-modal RAG pipeline for medical image diagnosis with explainability features.",
-        link: "https://github.com/mustafabozkaya/medical-fundus-rag"
-    },
-    {
-        title: "Ollama Streamlit Chat 💬",
-        tag: "Agentic AI",
-        tagClass: "tag-ai",
-        category: "ai",
-        description: "Local LLM chat interface with Ollama backend and Streamlit frontend.",
-        tech: ["Ollama", "Streamlit", "Python", "LangChain"],
-        details: "Privacy-first chat interface running local LLMs through Ollama with streaming responses.",
-        link: "https://github.com/mustafabozkaya/ollama-chat-app"
-    },
-    {
-        title: "AI System Architect Agent 🏗️",
-        tag: "Agentic AI",
-        tagClass: "tag-ai",
-        category: "ai",
-        description: "Autonomous agent that designs and generates system architectures from natural language requirements.",
-        tech: ["Python", "LangChain", "LLM", "Graphviz"],
-        details: "An AI agent that can take natural language requirements and produce complete system architecture diagrams and documentation.",
-        link: "https://github.com/mustafabozkaya/Awesome_Agent_Rag_LMMs_apps"
-    },
-    {
-        title: "ROS2 Autonomous Navigator 🤖",
-        tag: "Robotics",
-        tagClass: "tag-auto",
-        category: "cv",
-        description: "Autonomous navigation system for ROS2-based robots with SLAM and path planning.",
-        tech: ["ROS2", "SLAM", "Nav2", "Python", "C++"],
-        details: "Full-stack autonomous navigation using ROS2 Humble with real-time obstacle avoidance and mapping.",
-        link: "https://github.com/mustafabozkaya/Awesome_Agent_Rag_LMMs_apps"
-    },
-    {
-        title: "Enterprise Vision AI 👁️",
-        tag: "Computer Vision",
-        tagClass: "tag-cv",
-        category: "cv",
-        description: "Open-source computer vision platform for industrial quality control and inspection.",
-        tech: ["PyTorch", "OpenCV", "ONNX", "FastAPI", "React"],
-        details: "End-to-end CV platform for defect detection, classification, and real-time monitoring in manufacturing.",
-        link: "https://github.com/mustafabozkaya/enterprise-vision-ai"
-    },
-    {
-        title: "Car Price Prediction 🚗",
-        tag: "Machine Learning",
-        tagClass: "tag-ml",
-        category: "ml",
-        description: "Predict used car prices using regression models with feature engineering.",
-        tech: ["Python", "Scikit-learn", "Pandas", "Matplotlib"],
-        details: "Comparative analysis of Linear Regression, Random Forest, and XGBoost for car price prediction.",
-        link: "Car-price-prediction-project/"
-    },
-    {
-        title: "House Price Prediction 🏠",
-        tag: "Machine Learning",
-        tagClass: "tag-ml",
-        category: "ml",
-        description: "Housing price prediction with advanced regression techniques.",
-        tech: ["Python", "Scikit-learn", "Pandas", "Seaborn"],
-        details: "End-to-end ML pipeline for predicting house prices using California housing data.",
-        link: "House_price_prediction/"
-    },
-    {
-        title: "Predictive Maintenance 🔧",
-        tag: "Data Science",
-        tagClass: "tag-ds",
-        category: "data",
-        description: "Predict equipment failure in manufacturing using sensor data analysis.",
-        tech: ["Python", "Scikit-learn", "Time Series", "Pandas"],
-        details: "Classification models to predict machine failure before it happens, reducing downtime.",
-        link: "Predictive_Maintance_Analysis/"
-    },
-    {
-        title: "Lung Cancer Detection 🫁",
-        tag: "Deep Learning",
-        tagClass: "tag-ml",
-        category: "ml",
-        description: "Multi-model lung cancer prediction using medical imaging and ensemble methods.",
-        tech: ["TensorFlow", "Keras", "CNN", "Python"],
-        details: "Comparative study of multiple deep learning architectures for lung cancer classification.",
-        link: "Lung cancer prediction multi models/"
-    },
-    {
-        title: "Conformal Prediction 📊",
-        tag: "Data Science",
-        tagClass: "tag-ds",
-        category: "data",
-        description: "Uncertainty quantification in ML predictions using conformal prediction.",
-        tech: ["Python", "Conformal", "Scikit-learn", "NumPy"],
-        details: "Implementation of conformal prediction methods for reliable ML uncertainty estimation.",
-        link: "Conformal/"
+  <!-- ═══ GSAP ═══ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+  // ─── Three.js Particles ───
+  (function initParticles(){
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles = [];
+
+    function resize(){
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
     }
-];
+    resize();
+    window.addEventListener('resize', resize);
 
-// ─── Build UI ───
-const categories = [...new Set(projects.map(p => p.category))];
-const tags = [...new Set(projects.map(p => p.tag))];
-const allTech = [...new Set(projects.flatMap(p => p.tech))];
+    const COUNT = 80;
+    for(let i=0; i<COUNT; i++){
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        r: Math.random() * 2.5 + 1,
+        o: Math.random() * 0.35 + 0.1
+      });
+    }
 
-document.getElementById('project-count').textContent = projects.length;
-document.getElementById('category-count').textContent = categories.length;
-document.getElementById('tech-count').textContent = allTech.length;
+    function draw(){
+      ctx.clearRect(0, 0, w, h);
+      for(let p of particles){
+        p.x += p.vx;
+        p.y += p.vy;
+        if(p.x < 0 || p.x > w) p.vx *= -1;
+        if(p.y < 0 || p.y > h) p.vy *= -1;
 
-// Add filter buttons from tags
-const filterContainer = document.getElementById('filters');
-tags.forEach(tag => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(99,102,241,${p.o})`;
+        ctx.fill();
+      }
+
+      // connections
+      for(let i=0; i<particles.length; i++){
+        for(let j=i+1; j<particles.length; j++){
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if(dist < 150){
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(99,102,241,${0.08 * (1 - dist/150)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  // ─── GSAP Animations ───
+  gsap.registerPlugin(ScrollTrigger);
+
+  const heroTl = gsap.timeline({defaults:{ease:'power3.out'}});
+  heroTl.from('#hero .hero-badge', {y:30, opacity:0, duration:.8})
+        .from('#hero h1', {y:40, opacity:0, duration:1}, '-=.5')
+        .from('#hero p', {y:30, opacity:0, duration:.8}, '-=.6')
+        .from('#hero .hero-actions a', {y:20, opacity:0, stagger:.15, duration:.6}, '-=.5')
+        .from('#hero .hero-stats', {y:20, opacity:0, duration:.6}, '-=.3')
+        .from('.scroll-indicator', {opacity:0, duration:.4}, '-=.2');
+
+  // ─── Project Data ───
+  const projects = [
+    { title:"Web Scraper Demo 🌐", tag:"Data Extraction", tagClass:"tag-de", category:"data",
+      description:"Production-grade web scraping toolkit with stealth mode, rotating user agents, exponential backoff retry, and multi-format export (CSV/JSON/Excel).",
+      tech:["Python","BeautifulSoup","Requests","Pandas","Selenium"],
+      details:"A modular web scraper with retry logic, stealth mode (fake user agents), and export to CSV, JSON, Excel, and Parquet. Includes CLI interface with argparse and a chainable Python API.",
+      link:"web-scraper-demo/" },
+    { title:"Data Cleaning Pipeline 🧹", tag:"Data Processing", tagClass:"tag-da", category:"data",
+      description:"Automated data quality toolkit that detects and fixes missing values, duplicates, outliers, type mismatches, and formatting issues with detailed reports.",
+      tech:["Python","Pandas","NumPy","YAML","OpenPyXL"],
+      details:"Complete data cleaning solution with automatic profiling, intelligent missing value filling (auto/mean/median/mode), outlier detection (IQR/Z-score), dtype fixing, date standardization, and detailed cleaning reports.",
+      link:"data-cleaning-pipeline/" },
+    { title:"Data Annotation Helper 🏷️", tag:"ML Dataset Tools", tagClass:"tag-ml", category:"ml",
+      description:"ML dataset management toolkit with bidirectional conversion between COCO JSON, YOLO TXT, CSV, Pascal VOC XML formats. Validate and split datasets.",
+      tech:["Python","NumPy","OpenCV","Pillow","TQDM"],
+      details:"Supports bidirectional conversion between all major annotation formats. Validates bounding boxes for out-of-bounds, negative dimensions, and missing image files. Generates dataset statistics and visualizations.",
+      link:"data-annotation-helper/" },
+    { title:"Medical Fundus RAG 🏥", tag:"Agentic AI", tagClass:"tag-ai", category:"ai",
+      description:"Explainable AI for eye disease diagnosis using RAG with BiomedCLIP, Qdrant vector DB, and Gemini Pro for multi-modal medical image retrieval.",
+      tech:["RAG","BiomedCLIP","Qdrant","Gemini","FastAPI"],
+      details:"Multi-modal RAG pipeline for medical image diagnosis with explainability features. Combines vision-language models with vector search for interpretable diagnostic assistance.",
+      link:"https://github.com/mustafabozkaya/medical-fundus-rag" },
+    { title:"Ollama Streamlit Chat 💬", tag:"Agentic AI", tagClass:"tag-ai", category:"ai",
+      description:"Local LLM chat interface with Ollama backend and Streamlit frontend. Privacy-first with streaming responses and multi-model support.",
+      tech:["Ollama","Streamlit","Python","LangChain"],
+      details:"Privacy-first chat interface running local LLMs through Ollama with streaming responses, chat history, and model switching. No data leaves your machine.",
+      link:"https://github.com/mustafabozkaya/ollama-chat-app" },
+    { title:"Awesome Agent, RAG & LLM Apps 🚀", tag:"Agentic AI", tagClass:"tag-ai", category:"ai",
+      description:"80+ open-source AI projects covering AI agents, RAG pipelines, LLM apps, voice AI, MCP agents, and fine-tuning. Production-ready patterns with docs.",
+      tech:["Python","LangChain","Gemini","OpenAI","Ollama","RAG","CrewAI","ADK"],
+      details:"Comprehensive collection of real-world AI implementations: Starter AI Agents, Multi-Agent Systems (Finance, Legal, Recruitment), Voice AI Agents, MCP AI Agents (Browser, GitHub, Notion), RAG Tutorials (Agentic RAG, Corrective RAG, Hybrid Search, Vision RAG), LLM Apps with Memory, Chat with X (GitHub, Gmail, PDF, YouTube), fine-tuning, and full Google ADK + OpenAI Agents SDK Crash Courses.",
+      link:"https://github.com/mustafabozkaya/Awesome_Agent_Rag_LMMs_apps" },
+    { title:"Enterprise Vision AI 👁️", tag:"Computer Vision", tagClass:"tag-cv", category:"cv",
+      description:"Open-source computer vision platform for industrial quality control and inspection with real-time defect detection.",
+      tech:["PyTorch","OpenCV","ONNX","FastAPI","React"],
+      details:"End-to-end CV platform for defect detection, classification, and real-time monitoring in manufacturing environments. Features model deployment, inference API, and dashboard.",
+      link:"https://github.com/mustafabozkaya/enterprise-vision-ai" },
+    { title:"Car Price Prediction 🚗", tag:"Machine Learning", tagClass:"tag-ml", category:"ml",
+      description:"Predict used car prices using regression models with feature engineering. Comparative analysis of Linear Regression, Random Forest, and XGBoost.",
+      tech:["Python","Scikit-learn","Pandas","Matplotlib"],
+      details:"Comparative analysis of Linear Regression, Random Forest, and XGBoost for car price prediction with feature importance analysis and hyperparameter tuning.",
+      link:"Car-price-prediction-project/" },
+    { title:"House Price Prediction 🏠", tag:"Machine Learning", tagClass:"tag-ml", category:"ml",
+      description:"Housing price prediction with advanced regression techniques. End-to-end ML pipeline using California housing data.",
+      tech:["Python","Scikit-learn","Pandas","Seaborn"],
+      details:"End-to-end ML pipeline for predicting house prices using California housing data. Includes data exploration, feature engineering, model selection, and evaluation.",
+      link:"House_price_prediction/" },
+    { title:"Predictive Maintenance 🔧", tag:"Data Science", tagClass:"tag-ds", category:"data",
+      description:"Predict equipment failure in manufacturing using sensor data analysis and classification models to reduce unplanned downtime.",
+      tech:["Python","Scikit-learn","Time Series","Pandas"],
+      details:"Classification models to predict machine failure before it happens, reducing downtime. Features sensor data preprocessing, feature extraction from time series, and model comparison.",
+      link:"Predictive_Maintance_Analysis/" },
+    { title:"Lung Cancer Detection 🫁", tag:"Deep Learning", tagClass:"tag-ml", category:"ml",
+      description:"Multi-model lung cancer prediction using medical imaging and ensemble methods. Comparative study of deep learning architectures.",
+      tech:["TensorFlow","Keras","CNN","Python"],
+      details:"Comparative study of multiple deep learning architectures for lung cancer classification using CT scan imagery. Includes data augmentation, transfer learning, and ensemble methods.",
+      link:"Lung cancer prediction multi models/" },
+    { title:"Conformal Prediction 📊", tag:"Data Science", tagClass:"tag-ds", category:"data",
+      description:"Uncertainty quantification in ML predictions using conformal prediction methods for reliable confidence estimation.",
+      tech:["Python","Conformal","Scikit-learn","NumPy"],
+      details:"Implementation of conformal prediction methods for reliable ML uncertainty estimation. Provides prediction sets with guaranteed coverage rates.",
+      link:"Conformal/" },
+    { title:"AgentZero 🤖", tag:"Agentic AI", tagClass:"tag-ai", category:"ai",
+      description:"AI Agent Platform with JWT auth, agents CRUD, conversation management, usage tracking, and rate limiting. Full-stack Next.js + NestJS.",
+      tech:["Next.js","NestJS","Tailwind","PostgreSQL","Prisma","JWT","Vercel"],
+      details:"Full-stack AI agent management platform: Next.js 16 + NestJS 11 monorepo, Turborepo, Tailwind v4/shadcn/ui, Prisma 7 PostgreSQL. JWT auth, agents CRUD, conversation management, usage tracking, 25+ unit tests.",
+      link:"https://agentzero-pi.vercel.app" },
+    { title:"ApexCampus 🎓", tag:"Agentic AI", tagClass:"tag-ai", category:"ai",
+      description:"Online learning platform with courses, mentor chat, enrollments, and progress tracking. Real-time WebSocket communication.",
+      tech:["Next.js","NestJS","Tailwind","PostgreSQL","Prisma","WebSocket","Vercel"],
+      details:"Full-stack educational platform: Next.js 16 + NestJS 11 monorepo, Turborepo, Tailwind v4/shadcn/ui, Prisma 7 PostgreSQL. Course management, mentor chat, enrollment system, progress tracking, 24+ unit tests.",
+      link:"https://apexcampus.vercel.app" },
+    { title:"TrendPulse 📈", tag:"Agentic AI", tagClass:"tag-ai", category:"ai",
+      description:"Trend discovery platform aggregating trending topics from Web, Reddit, Hacker News, and YouTube in real-time with Auth.js.",
+      tech:["Next.js","React","Tailwind","Auth.js","Firecrawl","Vercel"],
+      details:"Full-stack trend aggregator: Next.js 16 + React 19 + Tailwind v4. Pulls trending topics from web search, Reddit, Hacker News, and YouTube. Real-time aggregation, topic categorization, trend scoring, period filtering, responsive dashboard.",
+      link:"https://trendpulse-green.vercel.app" }
+  ];
+
+  // ─── Stats ───
+  const categories = [...new Set(projects.map(p=>p.category))];
+  const allTech = [...new Set(projects.flatMap(p=>p.tech))];
+  document.getElementById('hs-projects').textContent = projects.length;
+  document.getElementById('hs-categories').textContent = categories.length;
+  document.getElementById('hs-tech').textContent = allTech.length;
+
+  // ─── Filters ───
+  const filterContainer = document.getElementById('filters');
+  const tagFilters = [...new Set(projects.map(p=>p.tag))];
+  tagFilters.forEach(tag=>{
     const btn = document.createElement('button');
     btn.textContent = tag;
     btn.dataset.filter = tag;
-    btn.onclick = () => filterProjects(tag);
     filterContainer.appendChild(btn);
-});
+  });
 
-// Also add category-based buttons
-categories.forEach(cat => {
-    const btn = document.createElement('button');
-    const label = { ai: 'Agentic AI', ml: 'ML/DL', data: 'Data Engineering', cv: 'CV/Robotics' }[cat] || cat;
-    btn.textContent = label;
-    btn.dataset.filter = cat;
-    btn.onclick = () => filterProjects(cat);
-    filterContainer.appendChild(btn);
-});
+  function filterProjects(filter){
+    document.querySelectorAll('.filters-scroll button').forEach(b=>b.classList.remove('active'));
+    document.querySelector(`.filters-scroll button[data-filter="${filter}"]`)?.classList.add('active');
+    if(filter==='all') document.querySelector('.filters-scroll button[data-filter="all"]').classList.add('active');
 
-function filterProjects(filter) {
-    document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
-    document.querySelector(`.filters button[data-filter="${filter}"]`)?.classList.add('active');
-    document.querySelector('.filters button[data-filter="all"]')?.classList.add('active');
-    // Redundant with above — keep all for "all" filter
-    document.querySelectorAll('.filters button').forEach(b => {
-        if (b.dataset.filter === filter) b.classList.add('active');
-    });
-    if (filter === 'all') {
-        document.querySelector('.filters button[data-filter="all"]').classList.add('active');
-    }
-
-    const filtered = filter === 'all'
-        ? projects
-        : projects.filter(p => p.category === filter || p.tag === filter);
-
+    const filtered = filter==='all' ? projects : projects.filter(p=>p.category===filter||p.tag===filter);
     renderGrid(filtered);
-}
+  }
 
-function renderGrid(items) {
+  // ─── Render Grid ───
+  function renderGrid(items){
     const grid = document.getElementById('grid');
-    grid.innerHTML = items.map(p => `
-        <div class="card" onclick="openModal(${projects.indexOf(p)})">
-            <span class="tag ${p.tagClass}">${p.tag}</span>
-            <h3>${p.title}</h3>
-            <p>${p.description}</p>
-            <div class="tech">${p.tech.map(t => `<span>${t}</span>`).join('')}</div>
-            <a href="${p.link}" class="footer-link" onclick="event.stopPropagation()">View Project →</a>
-        </div>
+    grid.innerHTML = items.map(p=>`
+      <div class="card" onclick="openModal(${projects.indexOf(p)})">
+        <span class="tag ${p.tagClass}">${p.tag}</span>
+        <h3>${p.title}</h3>
+        <p>${p.description}</p>
+        <div class="tech">${p.tech.map(t=>`<span>${t}</span>`).join('')}</div>
+        <a href="${p.link}" class="footer-link" onclick="event.stopPropagation()">View Project →</a>
+      </div>
     `).join('');
-}
 
-function openModal(index) {
+    // GSAP scroll reveal for new cards
+    gsap.utils.toArray('.card').forEach(card=>{
+      ScrollTrigger.create({
+        trigger: card,
+        start: 'top 92%',
+        onEnter: ()=>{card.classList.add('revealed')}
+      });
+    });
+  }
+
+  // ─── Modal ───
+  function openModal(index){
     const p = projects[index];
     document.getElementById('modal-content').innerHTML = `
-        <span class="tag ${p.tagClass} badge">${p.tag}</span>
-        <h2>${p.title}</h2>
-        <p>${p.details}</p>
-        <div class="tech" style="margin-bottom:1rem">${p.tech.map(t => `<span>${t}</span>`).join('')}</div>
-        <a href="${p.link}" class="button">🔗 View Project →</a>
+      <span class="tag ${p.tagClass} badge">${p.tag}</span>
+      <h2>${p.title}</h2>
+      <p>${p.details}</p>
+      <div class="tech">${p.tech.map(t=>`<span>${t}</span>`).join('')}</div>
+      <a href="${p.link}" class="button">View Project →</a>
     `;
     document.getElementById('modal').classList.add('open');
-}
+    document.body.style.overflow = 'hidden';
+  }
 
-function closeModal() {
+  function closeModal(){
     document.getElementById('modal').classList.remove('open');
-}
+    document.body.style.overflow = '';
+  }
 
-document.getElementById('modal').addEventListener('click', (e) => {
-    if (e.target === e.currentTarget) closeModal();
-});
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+  document.getElementById('modal').addEventListener('click',e=>{if(e.target===e.currentTarget) closeModal()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape') closeModal()});
 
-// Initial render
-renderGrid(projects);
-</script>
+  // ─── Initial Render ───
+  renderGrid(projects);
+
+  // ─── Mobile Menu ───
+  document.getElementById('menuBtn').addEventListener('click',()=>{
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('#navLinks a').forEach(a=>{
+    a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open'));
+  });
+
+  // ─── Navbar scroll effect ───
+  ScrollTrigger.create({
+    start: 'top -48px',
+    onUpdate: self=>{
+      document.getElementById('navbar').style.boxShadow = self.progress>0 ? '0 1px 6px rgba(0,0,0,.06)' : 'none';
+    }
+  });
+
+  // ─── Hero stat counter animation ───
+  gsap.from('#hs-projects, #hs-categories, #hs-tech', {
+    scrollTrigger: {trigger:'#hero .hero-stats', start:'top 90%'},
+    textContent: 0,
+    duration: 1.2,
+    ease: 'power2.out',
+    snap: {textContent: 1}
+  });
+  </script>
+
 </body>
 </html>
